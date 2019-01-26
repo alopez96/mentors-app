@@ -3,7 +3,7 @@ import { StyleSheet, TextInput, View,
      TouchableOpacity, Text, StatusBar } from 'react-native';
 
 
-export default class Login extends React.Component {
+export default class SignUpForm extends React.Component {
 
   render() {
     return (
@@ -11,7 +11,15 @@ export default class Login extends React.Component {
         <StatusBar barStyle='light-content' ></StatusBar>
         <TextInput 
         style={styles.input} 
-        placeholder='username or email' 
+        placeholder='name' 
+        returnKeyType='next'
+        onSubmitEditing={() => this.passwordInput.focus()}
+        autoCapitalize='none'
+        autoCorrect={false}
+         />
+        <TextInput 
+        style={styles.input} 
+        placeholder='email' 
         returnKeyType='next'
         onSubmitEditing={() => this.passwordInput.focus()}
         keyboardType='email-address'
@@ -27,7 +35,7 @@ export default class Login extends React.Component {
 
         <TouchableOpacity style={styles.buttonContainer} >
             <Text style={styles.buttonText} 
-            returnKeyType='go'>Login</Text>
+            returnKeyType='go'>Register</Text>
         </TouchableOpacity>
       </View>
     );

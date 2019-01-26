@@ -1,14 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, KeyboardAvoidingView, View,
   TouchableOpacity, Image } from 'react-native';
-import LoginForm from './LoginForm'
+import SignUpForm from './SignUpForm'
 
-
-export default class Login extends React.Component {
-
-
-  render() {
-    
+export default class SignUp extends React.Component {
+  render() {    
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <View style={styles.logoContainer} >
@@ -17,12 +13,9 @@ export default class Login extends React.Component {
             <Text style={styles.title} > Unite </Text>
       </View>
       <View styles={styles.formContainer} >
-        <LoginForm></LoginForm>
-        <TouchableOpacity>
-        <Text style={styles.forgotText}>Forgot password?</Text>
-      </TouchableOpacity>
+        <SignUpForm></SignUpForm>
       <TouchableOpacity>
-        <Text style={styles.signUpText}>Don't have an account?</Text>
+        <Text style={styles.signUpText}>Login</Text>
       </TouchableOpacity>
       </View>
       

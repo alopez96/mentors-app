@@ -1,23 +1,17 @@
 import React from 'react';
-import { StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, View} from 'react-native';
+import {SafeAreaView} from 'react-navigation';
 import Login from './components/Login/Login';
+import SignUp from './components/SignUp/SignUp';
 
 
 export default class App extends React.Component {
-
-  constructor(props){
-    super(props)
-    this.state = {
-      
-    }
-  }
-
-  render() {
-    
+  render() {    
     return (
-      <View style={styles.container}>
-      <Login></Login>
-      </View>
+      <SafeAreaView style={styles.container}>
+      
+      <SignUp></SignUp>
+      </SafeAreaView>
     );
   }
 }
