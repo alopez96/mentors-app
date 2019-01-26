@@ -14,6 +14,7 @@ export default class SignUpForm extends React.Component {
         placeholder='name' 
         returnKeyType='next'
         onSubmitEditing={() => this.passwordInput.focus()}
+        onChangeText={this.props.handleChange}
         autoCapitalize='none'
         autoCorrect={false}
          />
@@ -26,17 +27,12 @@ export default class SignUpForm extends React.Component {
         autoCapitalize='none'
         autoCorrect={false}
          />
-
         <TextInput 
         style={styles.input} 
         secureTextEntry
         placeholder='password'
         ref={(input) => this.passwordInput = input} />
 
-        <TouchableOpacity style={styles.buttonContainer} >
-            <Text style={styles.buttonText} 
-            returnKeyType='go'>Register</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -53,17 +49,5 @@ const styles = StyleSheet.create({
       color: '#fff',
       paddingHorizontal: 10
   }
-  ,buttonContainer:{
-      backgroundColor: '#000',
-      paddingVertical: 15,
-      borderRadius: 50
-  },
-  buttonText:{
-      textAlign: 'center',
-      color: '#fff',
-      fontWeight: '700',
-      
-  }
-  
   
 });
