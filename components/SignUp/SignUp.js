@@ -13,63 +13,87 @@ export default class SignUp extends React.Component {
             email: '',
             password: '',
         };
-        this.handleChange = this.handleChange.bind(this);
     }
     
-    validateInput () {
+    validateInput = () => {
+        const { name, email, password } = this.state;
         let errors = {};
-        if (this.state != null) {
-            const { name, email, password } = this.state;
-            if (name == null || email.length == 0){
+        if (name == null || email.length == 0){
             errors['name'] = 'Please enter your full name'
-            }
-            if (email == null || !email.includes('@ucsc.edu')){
+        }
+        if (email == null || !email.includes('@ucsc.edu')){
             errors['email'] = 'Email must be a UCSC email'
-            }
-            if (password == null || password.length < 8){
+        }
+        if (password == null || password.length < 8){
             errors['password'] = 'Password must be at least 8 letters'
-            }
             this.setState({ errors });
-            if (Object.keys(errors).length == 0){
-                //submitData()
-            }
-            else {
-                console.log(Object.values(errors))
-                this.refs.toast.show(Object.values(errors).join(), 500)
-            }
+        }
+        if (Object.keys(errors).length == 0){
+        //submitData()
+        }
+        else {
+            console.log(Object.values(errors))
+            this.refs.toast.show(Object.values(errors).join(), 500)
         }
     }
 
-    handleChange(event) {
-        console.log('adding')
-        this.setState({ name: event.currentTarget.value });
+    onNameInputChange = (nameInput) => {
+        this.setState({name: nameInput});
     }
 
+    onEmailInputChange = (emailInput) => {
+        this.setState({email: emailInput});
+    }
+
+    onPasswordInputChange = (passwordInput) => {
+        this.setState({password: passwordInput});
+    }
+    
+    SubmitData = () => {
+    fetch('http://localhost:3000/register', {
+        method: 'post',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+        name: this.state.name,
+        email: this.state.email,
+        password: this.state.password            
+        })
+    })
+    .then(response => response.json())
+    .then(user => {
+    if(user.id){
+        console.log('registered')
+        // this.props.loadUser(user)
+    }
+    })
+    .catch( err => console.log(err));
+    }
         
+      
     render() {
-        console.log('nametest', this.state.name)    
     return (
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
         <View style={styles.logoContainer} >
             <Image style={styles.logo}
-            source= {require('../../images/logo.png')}/>
-            <Text style={styles.title} > Unite </Text>
+                source= {require('../../images/logo.png')}/>
+            <Text style={styles.title} >Unite</Text>
         </View>
         <View styles={styles.formContainer} >
-        <SignUpForm
-        name = {this.state.name}
-        handleChange = {this.state.handleChange}></SignUpForm>
+            <SignUpForm
+                onNameInputChange={this.onNameInputChange}
+                onEmailInputChange={this.onEmailInputChange}
+                onPasswordInputChange={this.onPasswordInputChange}>
+            </SignUpForm>
 
-        <TouchableOpacity style={styles.buttonContainer} >
-            <Text style={styles.buttonText} 
-            returnKeyType='go'
-            onPress={this.validateInput}>
-            Register</Text>
-        </TouchableOpacity>
+            <TouchableOpacity style={styles.buttonContainer} >
+                <Text style={styles.buttonText} 
+                returnKeyType='go'
+                onPress={this.validateInput}>Register</Text>
+            </TouchableOpacity>
 
-        <TouchableOpacity>
-        <Text style={styles.blackText}>Already have an account?</Text>
-        </TouchableOpacity>
+            <TouchableOpacity>
+                <Text style={styles.blackText}>Already have an account?</Text>
+            </TouchableOpacity>
         </View>
         <Toast ref="toast"/>
         </KeyboardAvoidingView>

@@ -14,7 +14,7 @@ export default class SignUpForm extends React.Component {
         placeholder='name' 
         returnKeyType='next'
         onSubmitEditing={() => this.passwordInput.focus()}
-        onChangeText={this.props.handleChange}
+        onChangeText={this.props.onNameInputChange}
         autoCapitalize='none'
         autoCorrect={false}
          />
@@ -23,6 +23,7 @@ export default class SignUpForm extends React.Component {
         placeholder='email' 
         returnKeyType='next'
         onSubmitEditing={() => this.passwordInput.focus()}
+        onChangeText={this.props.onEmailInputChange}
         keyboardType='email-address'
         autoCapitalize='none'
         autoCorrect={false}
@@ -31,7 +32,8 @@ export default class SignUpForm extends React.Component {
         style={styles.input} 
         secureTextEntry
         placeholder='password'
-        ref={(input) => this.passwordInput = input} />
+        ref={(input) => this.passwordInput = input}
+        onChangeText={this.props.onPasswordInputChange} />
 
       </View>
     );

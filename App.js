@@ -8,8 +8,7 @@ import SignUp from './components/SignUp/SignUp';
 export default class App extends React.Component {
   render() {    
     return (
-      <SafeAreaView style={styles.container}>
-      
+      <SafeAreaView style={styles.container}> 
       <SignUp></SignUp>
       </SafeAreaView>
     );
