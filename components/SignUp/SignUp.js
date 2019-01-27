@@ -17,6 +17,7 @@ export default class SignUp extends React.Component {
     
     validateInput = () => {
         const { name, email, password } = this.state;
+        console.log('submit clicked')
         let errors = {};
         if (name == null || email.length == 0){
             errors['name'] = 'Please enter your full name'
@@ -24,12 +25,12 @@ export default class SignUp extends React.Component {
         if (email == null || !email.includes('@ucsc.edu')){
             errors['email'] = 'Email must be a UCSC email'
         }
-        if (password == null || password.length < 8){
-            errors['password'] = 'Password must be at least 8 letters'
+        if (password == null || password.length < 3){
+            errors['password'] = 'Password must be at least 3 letters'
             this.setState({ errors });
         }
         if (Object.keys(errors).length == 0){
-        //submitData()
+            this.registerUser()
         }
         else {
             console.log(Object.values(errors))
@@ -49,21 +50,21 @@ export default class SignUp extends React.Component {
         this.setState({password: passwordInput});
     }
     
-    SubmitData = () => {
+    registerUser = () => {
+    console.log('submit clicked2')
     fetch('http://localhost:3000/register', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
         name: this.state.name,
         email: this.state.email,
-        password: this.state.password            
+        password: this.state.password        
         })
     })
     .then(response => response.json())
     .then(user => {
     if(user.id){
         console.log('registered')
-        // this.props.loadUser(user)
     }
     })
     .catch( err => console.log(err));
