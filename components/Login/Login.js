@@ -1,11 +1,68 @@
 import React from 'react';
 import { StyleSheet, Text, KeyboardAvoidingView, View,
   TouchableOpacity, Image } from 'react-native';
-import LoginForm from './LoginForm'
+import Toast, {DURATION} from'react-native-easy-toast';
+import LoginForm from './LoginForm';
 
 
 export default class Login extends React.Component {
 
+  constructor(props){
+    super(props);
+    this.state = {  
+        email: '',
+        password: '',
+    };
+}
+
+validateInput = () => {
+  const { email, password } = this.state;
+  console.log('validating input')
+  let errors = {};
+  if (email == null || !email.includes('@ucsc.edu')){
+      errors['email'] = 'Email must be a UCSC email'
+  }
+  if (password == null || password.length < 3){
+      errors['password'] = 'Password must be at least 3 letters'
+      this.setState({ errors });
+  }
+  if (Object.keys(errors).length == 0){
+      this.signInUser()
+  }
+  else {
+      console.log(Object.values(errors))
+      // this.refs.toast.show(Object.values(errors).join(), 500)
+  }
+}
+
+onEmailInputChange = (emailInput) => {
+  this.setState({email: emailInput});
+}
+
+onPasswordInputChange = (passwordInput) => {
+  this.setState({password: passwordInput});
+}
+
+
+
+signInUser = () => {
+  console.log('signin user')
+  fetch('http://localhost:3000/signin', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+      email: this.state.email,
+      password: this.state.password        
+      })
+  })
+  .then(response => response.json())
+    .then(user => {
+      if(user.id){
+        this.props.loadUser(user)
+      }
+    })
+    .catch( err => console.log(err));
+  }
 
   render() {
     
@@ -17,7 +74,17 @@ export default class Login extends React.Component {
             <Text style={styles.title} > Unite </Text>
       </View>
       <View styles={styles.formContainer} >
-        <LoginForm></LoginForm>
+        <LoginForm
+          onEmailInputChange={this.onEmailInputChange}
+          onPasswordInputChange={this.onPasswordInputChange}>
+        </LoginForm>
+
+        <TouchableOpacity style={styles.buttonContainer} >
+                <Text style={styles.buttonText} 
+                returnKeyType='go'
+                onPress={this.validateInput}>Login</Text>
+            </TouchableOpacity>
+
         <TouchableOpacity>
         <Text style={styles.forgotText}>Forgot password?</Text>
       </TouchableOpacity>
@@ -54,6 +121,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonContainer:{
+    backgroundColor: '#000',
+    paddingVertical: 15,
+    borderRadius: 50,
+    marginLeft: 50,
+    marginRight: 50
+   },
+   buttonText:{
+     textAlign: 'center',
+     color: '#fff',
+     fontWeight: '700',   
+    },
   forgotText:{
     color: '#fff',
     textAlign: 'center',

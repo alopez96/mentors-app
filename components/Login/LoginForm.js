@@ -14,6 +14,7 @@ export default class Login extends React.Component {
         placeholder='username or email' 
         returnKeyType='next'
         onSubmitEditing={() => this.passwordInput.focus()}
+        onChangeText={this.props.onEmailInputChange}
         keyboardType='email-address'
         autoCapitalize='none'
         autoCorrect={false}
@@ -23,12 +24,9 @@ export default class Login extends React.Component {
         style={styles.input} 
         secureTextEntry
         placeholder='password'
-        ref={(input) => this.passwordInput = input} />
+        ref={(input) => this.passwordInput = input}
+        onChangeText={this.props.onPasswordInputChange} />
 
-        <TouchableOpacity style={styles.buttonContainer} >
-            <Text style={styles.buttonText} 
-            returnKeyType='go'>Login</Text>
-        </TouchableOpacity>
       </View>
     );
   }
@@ -56,6 +54,5 @@ const styles = StyleSheet.create({
       fontWeight: '700',
       
   }
-  
   
 });
