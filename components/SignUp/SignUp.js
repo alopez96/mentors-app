@@ -93,7 +93,8 @@ export default class SignUp extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity>
-                <Text style={styles.blackText}>Already have an account?</Text>
+                <Text style={styles.blackText}
+                onPress={() => this.props.navigation.navigate('Login')}>Already have an account?</Text>
             </TouchableOpacity>
         </View>
         <Toast ref="toast"/>
@@ -125,6 +126,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  buttonContainer:{
+    backgroundColor: '#000',
+    paddingVertical: 15,
+    borderRadius: 50,
+    marginLeft: 50,
+    marginRight: 50
+   },
+   buttonText:{
+     textAlign: 'center',
+     color: '#fff',
+     fontWeight: '700',   
+    },
   blackText:{
     color:'#000',
     textAlign: 'center',

@@ -5,6 +5,8 @@ import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import Profile from './components/Profile/Profile';
 
+import SwitchNavigation from './components/route';
+
 const intialState = {
   user: {
     id: '',
@@ -37,9 +39,7 @@ export default class App extends React.Component {
   render() {    
     return (
       <SafeAreaView style={styles.container}> 
-      <Login
-        loadUser={this.loadUser}>
-      </Login>
+      <SwitchNavigation/>
       </SafeAreaView>
     );
   }

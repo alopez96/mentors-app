@@ -89,7 +89,8 @@ signInUser = () => {
         <Text style={styles.forgotText}>Forgot password?</Text>
       </TouchableOpacity>
       <TouchableOpacity>
-        <Text style={styles.signUpText}>Don't have an account?</Text>
+        <Text style={styles.signUpText}
+        onPress={() => this.props.navigation.navigate('SignUp')} >Don't have an account?</Text>
       </TouchableOpacity>
       </View>
       
