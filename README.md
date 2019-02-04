@@ -3,3 +3,5 @@ Mentorship App
 frontend
 <br/>
 React JS
+<br/>
+Redux

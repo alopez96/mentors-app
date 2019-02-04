@@ -59,7 +59,7 @@ signInUser = () => {
   .then(response => response.json())
     .then(user => {
       if(user.id){
-        this.props.updateUser(user.name)
+        this.props.updateUser(user)
         this.props.navigation.navigate('Main')
       }
     })
@@ -89,7 +89,8 @@ signInUser = () => {
             </TouchableOpacity>
 
         <TouchableOpacity>
-        <Text style={styles.forgotText}>
+        <Text style={styles.forgotText}
+        onPress={() => this.props.navigation.navigate('Forgot')}>
           Forgot password?
         </Text>
       </TouchableOpacity>
@@ -145,7 +146,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderRadius: 50,
     marginLeft: 50,
-    marginRight: 50
+    marginRight: 50,
    },
    buttonText:{
      textAlign: 'center',
@@ -155,13 +156,14 @@ const styles = StyleSheet.create({
   forgotText:{
     color: '#fff',
     textAlign: 'center',
-    fontSize: 16
+    fontSize: 16,
+    marginTop: 20
   },
   signUpText:{
     color:'#000',
     textAlign: 'center',
     fontSize: 16,
-    marginTop: 10,
+    marginTop: 15,
     marginBottom: 30
   }
   

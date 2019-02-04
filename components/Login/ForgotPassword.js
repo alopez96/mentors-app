@@ -62,7 +62,8 @@ export default class ForgotPassword extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity>
-                <Text style={styles. backToLoginText}>
+                <Text style={styles. backToLoginText}
+                onPress={() => this.props.navigation.navigate('Login')}>
                     Back To Log In
                 </Text>
             </TouchableOpacity>

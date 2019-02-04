@@ -54,6 +54,9 @@ export const SwitchNavigation = createSwitchNavigator({
     App: {
         screen: AppStackNavigator
     },
+    Forgot:{
+        screen: ForgotPassword
+    }
 });
 
 

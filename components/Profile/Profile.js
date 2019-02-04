@@ -8,7 +8,6 @@ class Profile extends Component {
     constructor() {
         super();
         this.state = {
-            name: '',
             img: 'http://shpeboston.org/wp-content/uploads/2017/11/shpe-logo.png'
         }
     }
@@ -26,14 +25,14 @@ class Profile extends Component {
                     source={{ uri: this.state.img }} />
                 </TouchableOpacity>
                
-                <Text style={styles.nameText}>{this.props.user}</Text>
+                <Text style={styles.nameText}>{this.props.user[0].name}</Text>
+                <Text style={styles.aboutText}>{this.props.user[0].email}</Text>
                 <Text style={styles.updateNameText} onPress={this.onPressTitle}>
           {this.state.nameText}{'\n'}{'\n'}
         </Text>
         <View styles={styles.formContainer} >
         <ScrollView 
-            scrollEnabled={false}
-            contentContainerStyle={styles.main}
+            scrollEnabled={true}
         >
             
             <TextInput 
@@ -94,7 +93,6 @@ const styles = StyleSheet.create({
         color: '#fff',
         paddingHorizontal: 10
     },
-    
     avatar: {
         borderRadius: 63,
         borderWidth: 4,
@@ -121,6 +119,12 @@ const styles = StyleSheet.create({
     nameText:{
         textAlign: 'center',
         marginTop: 100,
+        fontSize: 28,
+        justifyContent: 'center'
+    },
+    aboutText:{
+        textAlign: 'center',
+        marginTop: 10,
         fontSize: 28,
         justifyContent: 'center'
     },
