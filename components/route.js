@@ -2,6 +2,7 @@ import React from 'react';
 import { createStackNavigator, createAppContainer,
      createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 
 import Login from './Login/Login';
@@ -14,14 +15,27 @@ export const AppBottomNavigator = createBottomTabNavigator({
     Home:{
         screen: Home,
             navigationOptions: {
+                tabBarLabel: () => {
+                    display: false
+                },
                 tabBarIcon: ({ tintColor }) => (
-                    <MaterialIcons name="ios-home" size={46} color={tintColor} />
+                    <Icon name="ios-home" size={40} color={tintColor} />
                 )
             }
     },
     Profile:{
-        screen: Profile
-    }
+        screen: Profile,
+        navigationOptions: {
+            tabBarLabel: () => {
+                display: false
+            },
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="ios-person" size={40} color={tintColor} />
+            )
+        }
+    },
+},  {
+    order: ['Home', 'Profile']
 })
 
 export const AppStackNavigator = createStackNavigator({
