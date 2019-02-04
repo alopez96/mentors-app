@@ -1,6 +1,7 @@
 import React from 'react';
 import { createStackNavigator, createAppContainer,
      createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 import Login from './Login/Login';
@@ -14,7 +15,7 @@ export const AppBottomNavigator = createBottomTabNavigator({
         screen: Home,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
-                    <Icon name="ios-home" size={46} color={tintColor} />
+                    <MaterialIcons name="ios-home" size={46} color={tintColor} />
                 )
             }
     },

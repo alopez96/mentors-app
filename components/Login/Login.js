@@ -58,7 +58,8 @@ signInUser = () => {
   .then(response => response.json())
     .then(user => {
       if(user.id){
-        this.props.loadUser(user)
+        // this.props.loadUser(user)
+        this.props.navigation.navigate('Main')
       }
     })
     .catch( err => console.log(err));
