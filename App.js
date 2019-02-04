@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-navigation';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import Profile from './components/Profile/Profile';
+import ForgotPassword from './components/Login/ForgotPassword';
 
 import SwitchNavigation from './components/route';
 
@@ -17,7 +18,7 @@ const intialState = {
 }
 
 export default class App extends React.Component {
-
+  
   constructor(){
     super()
     this.state = intialState;
