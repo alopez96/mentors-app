@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-navigation';
 import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 import Profile from './components/Profile/Profile';
+import ForgotPassword from './components/Login/ForgotPassword';
 
 const intialState = {
   user: {
@@ -15,7 +16,7 @@ const intialState = {
 }
 
 export default class App extends React.Component {
-
+  
   constructor(){
     super()
     this.state = intialState;
@@ -37,9 +38,10 @@ export default class App extends React.Component {
   render() {    
     return (
       <SafeAreaView style={styles.container}> 
-      <Login
+       <Profile></Profile>     
+        {/* <Login
         loadUser={this.loadUser}>
-      </Login>
+      </Login>  */}
       </SafeAreaView>
     );
   }
