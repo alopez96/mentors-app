@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity,KeyboardAvoidingView,ScrollView,TextInput } from 'react-native';
 import Toast, {DURATION} from'react-native-easy-toast';
+import {connect} from 'react-redux';
 
 
-export default class Profile extends Component {
+class Profile extends Component {
     constructor() {
         super();
         this.state = {
-            name: 'Arturo',
+            name: '',
             img: 'http://shpeboston.org/wp-content/uploads/2017/11/shpe-logo.png'
         }
     }
-
-    componentWillMount() {
-        //get user account here
-    };
 
     render() {
         return (
@@ -29,7 +26,7 @@ export default class Profile extends Component {
                     source={{ uri: this.state.img }} />
                 </TouchableOpacity>
                
-                <Text style={styles.nameText}>{this.state.name}</Text>
+                <Text style={styles.nameText}>{this.props.user}</Text>
                 <Text style={styles.updateNameText} onPress={this.onPressTitle}>
           {this.state.nameText}{'\n'}{'\n'}
         </Text>
@@ -39,7 +36,7 @@ export default class Profile extends Component {
             contentContainerStyle={styles.main}
         >
             
-         <TextInput 
+            <TextInput 
             style={styles.input} 
             placeholder='Name' 
             returnKeyType='next'
@@ -55,26 +52,28 @@ export default class Profile extends Component {
             autoCapitalize='none'
             autoCorrect={false}
             />
-           
            <TouchableOpacity style={styles.buttonContainer} >
                 <Text style={styles.buttonText} 
             
                 returnKeyType='go'
                 onPress={this.validateInput}>Save</Text>
             </TouchableOpacity>
-           
-            </ScrollView>
-            
-            </View>
+        </ScrollView> 
+        </View>
         <Toast ref="toast"/>
-        </KeyboardAvoidingView>
-                
-                
-            
-
+    </KeyboardAvoidingView>
+ 
         );
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        user: state
+    }
+}
+
+export default connect(mapStateToProps)(Profile);
 
 const styles = StyleSheet.create({
     input: {

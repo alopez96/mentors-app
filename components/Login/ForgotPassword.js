@@ -10,7 +10,6 @@ export default class ForgotPassword extends React.Component {
         this.state = {  
             email: '',
             emailText: "Enter Your E-mail And We'll Send You A Link To Reset Your Password."
-           
         };
     }
     
@@ -18,31 +17,17 @@ export default class ForgotPassword extends React.Component {
         const {  email } = this.state;
         console.log('submit clicked')
         let errors = {};
-      
-        if (email == null){
+        if (email === null || email === ''){
             errors['email'] = 'Please Enter An E-mail'
         }
          if(!email.includes('@ucsc.edu')){
              errors['email'] = 'Email Must Be A UCSC E-mail'
          }
-      
-        // if (Object.keys(errors).length == 0){
-        //     this.registerUser()
-        // }
-        // else {
-        //     console.log(Object.values(errors))
-        //     this.refs.toast.show(Object.values(errors).join(), 500)
-        // }
     }
-
-  
 
     onEmailInputChange = (emailInput) => {
         this.setState({email: emailInput});
     }
-
-    
-
       
     render() {
     return (
@@ -68,25 +53,24 @@ export default class ForgotPassword extends React.Component {
             keyboardType='email-address'
             autoCapitalize='none'
             autoCorrect={false}
-            />
-           
-           
+            />  
             <TouchableOpacity style={styles.buttonContainer} >
                 <Text style={styles.buttonText} 
-            
-                returnKeyType='go'
-                onPress={this.validateInput}>Submit</Text>
+                    returnKeyType='go'
+                    onPress={this.validateInput}>Submit
+                </Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
-                <Text style={styles. backToLoginText}>Back To Log In</Text>
+                <Text style={styles. backToLoginText}>
+                    Back To Log In
+                </Text>
             </TouchableOpacity>
             </ScrollView>
             
         </View>
         <Toast ref="toast"/>
         </KeyboardAvoidingView>
-        
     );
     }
 }

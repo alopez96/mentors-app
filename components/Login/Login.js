@@ -3,9 +3,10 @@ import { StyleSheet, Text, KeyboardAvoidingView, View,
   TouchableOpacity, Image } from 'react-native';
 import Toast, {DURATION} from'react-native-easy-toast';
 import LoginForm from './LoginForm';
+import {connect} from 'react-redux';
 
 
-export default class Login extends React.Component {
+class Login extends React.Component {
 
   constructor(props){
     super(props);
@@ -58,12 +59,13 @@ signInUser = () => {
   .then(response => response.json())
     .then(user => {
       if(user.id){
-        // this.props.loadUser(user)
+        this.props.updateUser(user.name)
         this.props.navigation.navigate('Main')
       }
     })
     .catch( err => console.log(err));
   }
+
 
   render() {
     
@@ -87,11 +89,15 @@ signInUser = () => {
             </TouchableOpacity>
 
         <TouchableOpacity>
-        <Text style={styles.forgotText}>Forgot password?</Text>
+        <Text style={styles.forgotText}>
+          Forgot password?
+        </Text>
       </TouchableOpacity>
       <TouchableOpacity>
         <Text style={styles.signUpText}
-        onPress={() => this.props.navigation.navigate('SignUp')} >Don't have an account?</Text>
+          onPress={() => this.props.navigation.navigate('SignUp')}>
+          Don't have an account?
+        </Text>
       </TouchableOpacity>
       </View>
       
@@ -99,6 +105,17 @@ signInUser = () => {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateUser: (user) => dispatch({
+      type: 'LOAD_USER',
+      payload: user
+    })
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Login);
 
 const styles = StyleSheet.create({
   container: {
