@@ -3,6 +3,7 @@ import { StyleSheet, Text, KeyboardAvoidingView, View,
   TouchableOpacity, Image } from 'react-native';
 import SignUpForm from './SignUpForm';
 import Toast, {DURATION} from'react-native-easy-toast';
+import {localhost} from '../../localhost';
 
 export default class SignUp extends React.Component {
 
@@ -52,7 +53,7 @@ export default class SignUp extends React.Component {
     
     registerUser = () => {
     console.log('submit clicked2')
-    fetch('http://localhost:3000/register', {
+    fetch('http://'+localhost+':3000/register', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({

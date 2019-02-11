@@ -4,6 +4,7 @@ import { StyleSheet, Text, KeyboardAvoidingView, View,
 import Toast, {DURATION} from'react-native-easy-toast';
 import LoginForm from './LoginForm';
 import {connect} from 'react-redux';
+import {localhost} from '../../localhost';
 
 
 class Login extends React.Component {
@@ -48,7 +49,7 @@ onPasswordInputChange = (passwordInput) => {
 
 signInUser = () => {
   console.log('signin user')
-  fetch('http://localhost:3000/signin', {
+  fetch('http://'+localhost+':3000/signin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
