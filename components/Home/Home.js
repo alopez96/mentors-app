@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import CardComponent from '../Card/CardComponent';
+import {Container, Content, Icon } from 'native-base';
 
 export default class Home extends Component {
 
-    static navigationOptions = {
-        header: null
-    }
-  
   render() {
     return (
-      <View>
-        <Text> Home </Text>
-      </View>
+        <Container style={styles.container}>
+          <Content>
+            <CardComponent imageSource="1" likes="101"/>
+            <CardComponent imageSource="2" likes="201"/>
+            <CardComponent imageSource="3" likes="301"/>
+          </Content>
+        </Container>
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+})
