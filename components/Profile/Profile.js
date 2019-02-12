@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image, TouchableOpacity,KeyboardAvoidingView,ScrollView,TextInput } from 'react-native';
 import Toast, {DURATION} from'react-native-easy-toast';
 import {connect} from 'react-redux';
+import {Card, CardItem, Thumbnail, 
+    Body, Left, Right, Button, Icon} from 'native-base';
 
 
 class Profile extends Component {
@@ -13,37 +15,35 @@ class Profile extends Component {
         }
     }
 
+    onChangePicture = () => {
+        console.log('change image')
+    }
+
+    onPressEdit = () => {
+        console.log('edit pressed')
+    }
+
     render() {
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
-             <View>
-                <View style={styles.toolbar}>
-                     <Text style={styles.toolbarTitle}>Profile</Text>
-                <TouchableOpacity>
-                    <Text style={styles.toolbarButton} onPress={() => this.props.navigation.navigate('EditProfile')}>
-                    Edit</Text>
-                </TouchableOpacity>
-                </View>
-            </View>
-            <View style={{ height: 120, backgroundColor: '#0193ed' }}>    
-                </View>
+            <View style={{ height: 160, backgroundColor: '#c0c0c0' }}></View>
                 <TouchableOpacity style={styles.avatar} 
-                    onPress={() => this.changePicture()}>
+                    onPress={() => this.onChangePicture()}>
                     <Image style={styles.imageAvatar} 
                     source={{ uri: this.state.img }} />
                 </TouchableOpacity>
                
             
-<Text style={styles.nameText}>{this.props.onnameInputChange}</Text>
-<Text style={styles.homeTownText}>{this.props.onhomeTownInputChangel}</Text>
-<Text style={styles.updateNameText} onPress={this.onPressTitle}>
-{this.state.nameText}{'\n'}{'\n'}
-</Text>
+        <Text style={styles.nameText}>{this.props.user[0].name}</Text>
+        <Text style={styles.aboutText}>{this.props.user[0].email}</Text>
+        <Button style={styles.editButton} 
+            onPress={this.onPressEdit}>
+            <Icon name="ios-create"
+                style={{color:'black'}}/> 
+        </Button>
 
-           
-</KeyboardAvoidingView>
- 
-        );
+    </KeyboardAvoidingView>
+    );
     }
 }
 
@@ -56,28 +56,6 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps)(Profile);
 
 const styles = StyleSheet.create({
-    nameText:{
-        textAlign: 'center',
-        marginTop: 100,
-        fontSize: 28,
-        justifyContent: 'center'
-
-    },
-    updateNameText: {
-        fontSize: 9,
-        color:'#fff',
-        fontWeight: 'bold',
-        alignSelf: 'center',
-        bottom: '100%'
-    },
-    updatehomeTownText: {
-        fontSize: 9,
-        color:'#fff',
-        fontWeight: 'bold',
-        position: 'absolute',
-        alignSelf: 'center',
-        bottom: '100%'
-     },
     toolbar:{
         backgroundColor:'#000',
         paddingTop:50,
@@ -113,11 +91,20 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         position: 'relative'
     },
-    formContainer:{
-        height: 140,
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
+    nameText:{
+        marginTop: 100,
+        fontSize: 24,
+        marginLeft: 10,
+        justifyContent: 'center'
+    },
+    aboutText:{
+        margin: 10,
+        justifyContent: 'center'
+    },
+    editButton:{
+        backgroundColor:'white',
+        margin: 10
+    }
  
 });
 
