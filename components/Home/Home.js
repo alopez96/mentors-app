@@ -33,7 +33,6 @@ export default class Home extends Component {
     console.log('updating post', post)
   }
   
-
   componentDidMount(){
     this.getPosts();
   }

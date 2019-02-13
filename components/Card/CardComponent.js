@@ -52,8 +52,7 @@ class CardComponent extends Component {
               <Text style={{fontWeight:"900"}}>arturo </Text>
               tioregn ieorngvie anve
               argvn'iefvne'View
-              nvoenv ea]Viewenfsoiv'ne shouldComponentUpdate = (nextProps, nextState)
-              
+              nvoenv ea]Viewenfsoiv'ne shouldComponentUpdate              
             </Text>
           </Body>
         </CardItem>
