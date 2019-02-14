@@ -1,16 +1,15 @@
 import React from 'react';
 import { createStackNavigator, createAppContainer,
      createSwitchNavigator, createBottomTabNavigator } from 'react-navigation';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Icon from 'react-native-vector-icons/Ionicons';
-
 
 import Login from './Login/Login';
 import SignUp from './SignUp/SignUp';
 import Home from './Home/Home';
 import Profile from './Profile/Profile';
-//import EditProfile from './Profile/EditProfile';
 import ForgotPassword from './Login/ForgotPassword';
+
+import { User } from './User/User';
 
 
 export const AppBottomNavigator = createBottomTabNavigator({
@@ -58,9 +57,19 @@ export const SwitchNavigation = createSwitchNavigator({
     Forgot:{
         screen: ForgotPassword
     },
-    // Profile:{
-    //     screen: EditProfile
-    // }
+});
+
+
+export const feedNavigation = createSwitchNavigator({
+    Main: {
+        screen: Home
+    },
+    UserScreen: {
+        screen: User
+    },
+    // eventScreen: {
+    //     screen: Event
+    // },
 });
 
 

@@ -88,7 +88,7 @@ class Profile extends Component {
             <View>
                 <Modal isVisible={this.state.isModalVisible}
                 style={styles.modalStyle}>
-                <View style={{ flex: 1, margin: 10 }}>
+                <View style={{ flex: 1, margin: 20 }}>
                     <Form>
                         <Item>
                             <Input placeholder="name"
@@ -193,6 +193,11 @@ const styles = StyleSheet.create({
     modalStyle:{
         backgroundColor: 'white',
         padding: 10,
+        marginTop: 50,
+        marginRight: 20,
+        marginBottom: 30,
+        marginLeft: 20,
+        borderRadius: 10 
     },
     modalButtons:{
         flex: 1,

@@ -3,15 +3,25 @@ import { View, Text, Image } from 'react-native';
 import {Card, CardItem, Thumbnail, 
         Body, Left, Right, Button, Icon} from 'native-base';
 
-class CardComponent extends Component {
+class CardComponent extends React.Component {
 
   render() {
 
     const images = {
-      "1": "../../images/classico.jpg",
-      "2": "../../images/classico.jpg",
-      "2": "../../images/classico.jpg"
+      "1": "require('../../images/classico.jpg')",
+      "2": "require('../../images/classico.jpg')",
+      "2": "require('../../images/classico.jpg')"
     }
+
+    userClicked = () => {
+      console.log('user clicked')
+    }
+
+    postClicked = () => {
+      console.log('post clicked')
+    }
+
+
     return (
       <Card>
         <CardItem>
@@ -23,8 +33,8 @@ class CardComponent extends Component {
             </Body>
           </Left>
         </CardItem>
-        <CardItem cardBody>
-          <Image source={images[this.props.imageSource]}
+        <CardItem cardBody button onPress={() => this.postClicked}>
+          <Image source={require('../../images/classico.jpg')}
             style={{height:200, width:null, flex:1}}/>
         </CardItem>
         <CardItem style={{height:45}}>
