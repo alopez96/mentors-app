@@ -8,8 +8,10 @@ import SignUp from './SignUp/SignUp';
 import Home from './Home/Home';
 import Profile from './Profile/Profile';
 import ForgotPassword from './Login/ForgotPassword';
+import CreateEVent from './CreateEvent/CreateEvent';
 
 import { User } from './User/User';
+import CreateEvent from './CreateEvent/CreateEvent';
 
 
 export const AppBottomNavigator = createBottomTabNavigator({
@@ -35,8 +37,19 @@ export const AppBottomNavigator = createBottomTabNavigator({
             )
         }
     },
+    Add:{
+        screen: CreateEvent,
+        navigationOptions:{
+            tabBarLabel: () => {
+                display: false
+            },
+            tabBarIcon: ({ tintColor }) => (
+                <Icon name="ios-add-circle" size={40} color={tintColor} />
+            )
+        }
+    }
 },  {
-    order: ['Home', 'Profile']
+    order: ['Home', 'Add', 'Profile']
 })
 
 export const AppStackNavigator = createStackNavigator({
