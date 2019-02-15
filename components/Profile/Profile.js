@@ -7,15 +7,14 @@ import Toast, {DURATION} from'react-native-easy-toast';
 import {connect} from 'react-redux';
 import { Button, Icon } from 'native-base';
 import Modal from 'react-native-modal';
-import { Container, Header, Content, 
-    Form, Item, Input } from 'native-base';
+import { Thumbnail, Form, Item, Input } from 'native-base';
 
 
 class Profile extends Component {
     constructor() {
         super();
         this.state = {
-            img: 'http://shpeboston.org/wp-content/uploads/2017/11/shpe-logo.png',
+            img: '',
             isModalVisible: false,
             major: '',
             city: ''
@@ -62,11 +61,10 @@ class Profile extends Component {
                 <Icon name="ios-create"
                     style={{color:'black'}}/> 
             </Button>
-            <View style={{ height: 160, backgroundColor: '#c0c0c0' }}></View>
+            <View style={{ height: 120, backgroundColor: '#c0c0c0' }}></View>
                 <TouchableOpacity style={styles.avatar} 
                     onPress={() => this.onChangePicture()}>
-                    <Image style={styles.imageAvatar} 
-                    source={{ uri: this.state.img }} />
+                    <Thumbnail style={styles.image} source={require('../../images/barca.png')}/>
                 </TouchableOpacity>
                
             
@@ -155,8 +153,8 @@ const styles = StyleSheet.create({
         flex:1                
     },
      avatar: {
-        borderRadius: 63,
-        borderWidth: 4,
+        borderRadius: 60,
+        borderWidth: 2,
         borderColor: "#fff",
         marginBottom: 10,
         alignSelf: 'center',
@@ -165,12 +163,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 110
     },
-    imageAvatar: {
-        width: 130,
-        height: 130,
-        borderRadius: 70,
-        alignSelf: 'center',
-        position: 'relative'
+    image: {    
+        width:100,
+        height: 100,
+        margin: 4,
+        borderRadius: 50,
     },
     nameText:{
         marginTop: 100,
