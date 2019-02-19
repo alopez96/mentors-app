@@ -38,6 +38,10 @@ class CreateEvent extends Component {
         .then(post => {
         if(post){
             console.log('postid', post)
+            this.setState({
+              title: '',
+              description: ''
+            })
             this.props.navigation.navigate('Home')
         }
         })

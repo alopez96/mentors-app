@@ -8,16 +8,20 @@ import {connect} from 'react-redux';
 import { Button, Icon } from 'native-base';
 import Modal from 'react-native-modal';
 import { Thumbnail, Form, Item, Input } from 'native-base';
+import {localhost} from '../../localhost';
 
 
 class Profile extends Component {
     constructor() {
         super();
         this.state = {
-            img: '',
+            name: '',
+            // email: this.props.user[0].email,
             isModalVisible: false,
+            img: '',
             major: '',
-            city: ''
+            city: '',
+
         }
     }
 
@@ -32,28 +36,38 @@ class Profile extends Component {
     }
 
     submitChanges = () => {
-        // fetch('http://'+localhost+':3000/updateAccount', {
-        //     method: 'post',
-        //     headers: {'Content-Type': 'application/json'},
-        //     body: JSON.stringify({
-        //     city: this.state.city,
-        //     major: this.state.major        
-        //     })
-        // })
-        // .then(response => response.json())
-        // .then(user => {
-        //     if(user.id){
-        //         this.setState({
-        //             isModalVisible: !this.state.isModalVisible
-        //         })
-        //     }
-        //     })
-        // .catch( err => console.log(err));
+        console.log(this.props.user[0].id)
+        console.log(this.state.name)
+        fetch('http://'+localhost+':3000/editProfile', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                userid: this.props.user[0].id,
+                name: this.state.name,
+            })
+        })
+        .then(user => {
+            if(user){
+                this.setState({
+                    isModalVisible: !this.state.isModalVisible
+                })
+            }
+            else{
+                console.log('error updating user')
+            }
+            })
+        .catch( err => console.log(err));
+    }
+
+    componentDidMount(){
+        this.setState({
+            name: this.props.user[0].name
+        })
     }
 
     render() {
 
-        var {major, city} = this.state;
+        var {name, major, city} = this.state;
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <Button style={styles.editButton} 
@@ -68,7 +82,7 @@ class Profile extends Component {
                 </TouchableOpacity>
                
             
-            <Text style={styles.nameText}>{this.props.user[0].name}</Text>
+            <Text style={styles.nameText}>{this.state.name}</Text>
             <Text style={styles.aboutText}>{this.props.user[0].email}</Text>
             {major.length > 0
                 ?<Text style={{marginLeft: 10}}>
@@ -88,8 +102,11 @@ class Profile extends Component {
                 style={styles.modalStyle}>
                 <View style={{ flex: 1, margin: 20 }}>
                     <Form>
-                        <Item>
+                    <Item>
                             <Input placeholder="name"
+                            label='name'
+                            onChangeText={(name) => this.setState({ name })}
+                            value={name}
                              />
                         </Item>
                         <Item>
