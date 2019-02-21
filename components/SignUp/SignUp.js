@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, KeyboardAvoidingView, View,
-  TouchableOpacity, Image } from 'react-native';
+  TouchableOpacity, Image, Alert } from 'react-native';
 import SignUpForm from './SignUpForm';
 import Toast, {DURATION} from'react-native-easy-toast';
 import {localhost} from '../../localhost';
@@ -35,7 +35,7 @@ export default class SignUp extends React.Component {
         }
         else {
             console.log(Object.values(errors))
-            this.refs.toast.show(Object.values(errors).join(), 500)
+            this.refs.toast.show(Object.values(errors).join(), 2000)
         }
     }
 
@@ -52,7 +52,6 @@ export default class SignUp extends React.Component {
     }
     
     registerUser = () => {
-    console.log('submit clicked2')
     fetch('http://'+localhost+':3000/register', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
@@ -64,8 +63,13 @@ export default class SignUp extends React.Component {
     })
     .then(response => response.json())
     .then(user => {
-    if(user.id){
-        console.log('registered')
+    if(typeof(user) == 'number'){
+        console.log('registered user id ', user) 
+        this.props.navigation.navigate('Login')
+    }
+    else{
+        console.log('error', user)
+        this.refs.toast.show('unable to register: ' + user, 2000)
     }
     })
     .catch( err => console.log(err));
