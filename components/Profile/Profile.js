@@ -16,12 +16,12 @@ class Profile extends Component {
         super();
         this.state = {
             name: '',
-            // email: this.props.user[0].email,
-            isModalVisible: false,
+            email: '',
             img: '',
             major: '',
             city: '',
-
+            bio: '',
+            isModalVisible: false,
         }
     }
 
@@ -44,6 +44,9 @@ class Profile extends Component {
             body: JSON.stringify({
                 userid: this.props.user[0].id,
                 name: this.state.name,
+                major: this.state.major,
+                city: this.state.city,
+                bio: this.state.bio,
             })
         })
         .then(user => {
@@ -61,13 +64,17 @@ class Profile extends Component {
 
     componentDidMount(){
         this.setState({
-            name: this.props.user[0].name
+            name: this.props.user[0].name,
+            email: this.props.user[0].email,
+            major: this.props.user[0].major,
+            city: this.props.user[0].city,
+            bio: this.props.user[0].bio
         })
     }
 
     render() {
 
-        var {name, major, city} = this.state;
+        var {name, email, major, city, bio} = this.state;
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <Button style={styles.editButton} 
@@ -82,8 +89,8 @@ class Profile extends Component {
                 </TouchableOpacity>
                
             
-            <Text style={styles.nameText}>{this.state.name}</Text>
-            <Text style={styles.aboutText}>{this.props.user[0].email}</Text>
+            <Text style={styles.nameText}>{name}</Text>
+            <Text style={styles.aboutText}>{email}</Text>
             {major.length > 0
                 ?<Text style={{marginLeft: 10}}>
                    Major: <Text style={styles.aboutText}>{major} </Text>
@@ -95,7 +102,13 @@ class Profile extends Component {
                    City: <Text style={styles.aboutText}>{city} </Text>
                 </Text>
                 :null
-            }            
+            }
+            {bio.length > 0
+                ?<Text style={{marginLeft: 10}}>
+                   Bio: <Text style={styles.aboutText}>{bio} </Text>
+                </Text>
+                :null
+            }              
 
             <View>
                 <Modal isVisible={this.state.isModalVisible}
@@ -121,6 +134,13 @@ class Profile extends Component {
                             label='city'
                             onChangeText={(city) => this.setState({ city })}
                             value={city}
+                             />
+                        </Item>
+                        <Item last>
+                            <Input placeholder="tell your friends about you"
+                            label='bio'
+                            onChangeText={(bio) => this.setState({ bio })}
+                            value={bio}
                              />
                         </Item>
                     </Form>   
@@ -194,7 +214,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     aboutText:{
-        margin: 10,
+        marginLeft: 10,
+        marginTop: 20,
         justifyContent: 'center',
         fontWeight: 'bold'
     },
