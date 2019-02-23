@@ -3,9 +3,10 @@ import { StyleSheet } from 'react-native';
 import CardComponent from '../Card/CardComponent';
 import {Container, Content, Header, Item,
    Input, Icon, Button, Text } from 'native-base';
+import {connect} from 'react-redux';
 import {localhost} from '../../localhost';
 
-export default class Home extends Component {
+class Home extends Component {
 
   constructor(props){
     super(props);
@@ -25,14 +26,10 @@ export default class Home extends Component {
     // .then(response => response.json())
     //   .then(post => {
     //     if(post.id){
-    //       this.updatePost(post)
+
     //     }
     //   })
     //   .catch( err => console.log(err));
-  }
-
-  updatePost = (post) => {
-    console.log('updating post', post)
   }
   
   componentDidMount(){
@@ -41,22 +38,19 @@ export default class Home extends Component {
 
   search = () => {
     const name = this.state.nameSearch
-    console.log('search', name)
+    console.log('searchName', name)
     fetch('http://'+localhost+':3000/findUser/' + name, {
         method: 'get',
         headers: {'Content-Type': 'application/json'},
     })
     .then(response => response.json())
-      .then(users => {
+    .then(users => {
         if(users){
-          users.map(function (user) {
-            console.log(user.id)
-            console.log(user.name)
-          })
+          this.props.findUsers(users)
           this.props.navigation.navigate('searchScreen')
         }
-      })
-      .catch( err => console.log(err));
+    })
+    .catch( err => console.log(err));
   }
 
   userClick () {
@@ -91,6 +85,18 @@ export default class Home extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    findUsers: (users) => dispatch({
+      type: 'FIND_USERS',
+      payload: {
+        users
+      }
+    })
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Home);
 
 const styles = StyleSheet.create({
   container: {

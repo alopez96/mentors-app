@@ -36,13 +36,13 @@ class Profile extends Component {
     }
 
     submitChanges = () => {
-        console.log(this.props.user[0].id)
+        console.log(this.props.user.id)
         console.log(this.state.name)
         fetch('http://'+localhost+':3000/editProfile', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                userid: this.props.user[0].id,
+                userid: this.props.user.id,
                 name: this.state.name,
                 major: this.state.major,
                 city: this.state.city,
@@ -63,12 +63,13 @@ class Profile extends Component {
     }
 
     componentDidMount(){
+        console.log('profile props user', this.props.user)
         this.setState({
-            name: this.props.user[0].name,
-            email: this.props.user[0].email,
-            major: this.props.user[0].major,
-            city: this.props.user[0].city,
-            bio: this.props.user[0].bio
+            name: this.props.user.name,
+            email: this.props.user.email,
+            major: this.props.user.major,
+            city: this.props.user.city,
+            bio: this.props.user.bio
         })
     }
 
@@ -165,7 +166,7 @@ class Profile extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state
+        user: state.user
     }
 }
 

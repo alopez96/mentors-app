@@ -115,7 +115,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     updateUser: (user) => dispatch({
       type: 'LOAD_USER',
-      payload: user
+      payload: {
+        user
+      }
     })
   }
 }

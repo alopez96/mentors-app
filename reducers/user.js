@@ -1,20 +1,15 @@
-const user = (state = [], action) => {
+const userReducer = (state = [], action) => {
     switch(action.type){
         case 'LOAD_USER':{
             console.log('inside reducer')
-            console.log(state,action)
             console.log('payload', action.payload)
-            return [
-                ...state, action.payload
-            ]
-
+            return action.payload.user
         }
         case 'SIGN_OUT_USER':
         
-        default:
+        default: 
             return state
     }
-    return state
 }
 
-export default user
+export default userReducer
