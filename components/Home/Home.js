@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import CardComponent from '../Card/CardComponent';
-import {Container, Content, Icon } from 'native-base';
+import {Container, Content, Header, Item,
+   Input, Icon, Button, Text } from 'native-base';
 import {localhost} from '../../localhost';
 
 export default class Home extends Component {
-
 
   constructor(props){
     super(props);
     this.state = {  
         uid: '',
+        nameSearch: '',
     };
+    this.userClick = this.userClick.bind(this);
   }
 
   getPosts = () => {
@@ -37,12 +39,50 @@ export default class Home extends Component {
     this.getPosts();
   }
 
+  search = () => {
+    const name = this.state.nameSearch
+    console.log('search', name)
+    fetch('http://'+localhost+':3000/findUser/' + name, {
+        method: 'get',
+        headers: {'Content-Type': 'application/json'},
+    })
+    .then(response => response.json())
+      .then(users => {
+        if(users){
+          users.map(function (user) {
+            console.log(user.id)
+            console.log(user.name)
+          })
+          this.props.navigation.navigate('searchScreen')
+        }
+      })
+      .catch( err => console.log(err));
+  }
+
+  userClick () {
+    console.log('user clicked')
+    this.props.navigation.navigate('User')
+  }
+
 
   render() {
     return (
         <Container style={styles.container}>
+          <Header searchBar rounded style={{marginTop: -35}}>
+          <Item>
+            <Icon name="ios-search" />
+            <Input placeholder="Search"
+              label="nameSearch"
+              onChangeText={(nameSearch) => this.setState({ nameSearch })}
+              value={this.state.nameSearch}/>
+            <Icon name="ios-people" />
+          </Item>
+          <Button transparent onPress={() => this.search()}>
+            <Text>Search</Text>
+          </Button>
+        </Header>
           <Content>
-            <CardComponent button onPress={() => this.props.navigation.navigate('SignUp')} imageSource="1" likes="101"/>
+            <CardComponent userClick={this.userClick} imageSource="1" likes="101"/>
             <CardComponent imageSource="2" likes="201"/>
             <CardComponent imageSource="3" likes="301"/>
           </Content>

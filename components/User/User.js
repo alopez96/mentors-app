@@ -1,28 +1,31 @@
 
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Image, 
-    TouchableOpacity,KeyboardAvoidingView } from 'react-native';
-import {connect} from 'react-redux';
+import { View, StyleSheet, Text, 
+    TouchableOpacity,KeyboardAvoidingView} from 'react-native';
 import { Button, Icon } from 'native-base';
+import { Thumbnail } from 'native-base';
 
 
-export class User extends Component {
+class User extends Component {
     constructor() {
         super();
         this.state = {
-            img: 'http://shpeboston.org/wp-content/uploads/2017/11/shpe-logo.png',
+            name: '',
+            email: '',
+            img: '',
             major: '',
-            city: ''
+            city: '',
+            bio: '',
         }
     }
 
-    submitChanges = () => {
-        
+    onPictureZoom = () => {
+        console.log('image zoom')
     }
 
     render() {
 
-        var {major, city} = this.state;
+        var {name, email, major, city, bio} = this.state;
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <Button style={styles.editButton} 
@@ -30,25 +33,62 @@ export class User extends Component {
                 <Icon name="ios-create"
                     style={{color:'black'}}/> 
             </Button>
-            <View style={{ height: 160, backgroundColor: '#c0c0c0' }}></View>
-                <TouchableOpacity style={styles.avatar}>
-                    <Image style={styles.imageAvatar} 
-                    source={{ uri: this.state.img }} />
+            <View style={{ height: 120, backgroundColor: '#c0c0c0' }}></View>
+                <TouchableOpacity style={styles.avatar} 
+                    onPress={() => this.onPictureZoom()}>
+                    <Thumbnail style={styles.image} source={require('../../images/barca.png')}/>
                 </TouchableOpacity>
                
             
-            <Text style={styles.nameText}>name</Text>
-            <Text style={styles.aboutText}>about</Text>     
+            <Text style={styles.nameText}>{name}</Text>
+            <Text style={styles.aboutText}>{email}</Text>
+            {major && (major.length > 0)
+                ?<Text style={{marginLeft: 10}}>
+                   Major: <Text style={styles.aboutText}>{major} </Text>
+                </Text>
+                :null
+            }
+            {city && (city.length > 0)
+                ?<Text style={{marginLeft: 10}}>
+                   City: <Text style={styles.aboutText}>{city} </Text>
+                </Text>
+                :null
+            }
+            {bio && (bio.length > 0)
+                ?<Text style={{marginLeft: 10}}>
+                   Bio: <Text style={styles.aboutText}>{bio} </Text>
+                </Text>
+                :null
+            }              
 
     </KeyboardAvoidingView>
     );
     }
 }
 
+export default User;
+
 const styles = StyleSheet.create({
+    toolbar:{
+        backgroundColor:'#000',
+        paddingTop:50,
+        paddingBottom:10,
+        flexDirection:'row'    
+    },
+    toolbarButton:{
+        width: 50,            
+        color:'#fff',
+        textAlign:'center'
+    },
+    toolbarTitle:{
+        color:'#fff',
+        textAlign:'center',
+        fontWeight:'bold',
+        flex:1                
+    },
      avatar: {
-        borderRadius: 63,
-        borderWidth: 4,
+        borderRadius: 60,
+        borderWidth: 2,
         borderColor: "#fff",
         marginBottom: 10,
         alignSelf: 'center',
@@ -57,12 +97,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 110
     },
-    imageAvatar: {
-        width: 130,
-        height: 130,
-        borderRadius: 70,
-        alignSelf: 'center',
-        position: 'relative'
+    image: {    
+        width:100,
+        height: 100,
+        margin: 4,
+        borderRadius: 50,
     },
     nameText:{
         marginTop: 100,
@@ -72,10 +111,36 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     aboutText:{
-        margin: 10,
+        marginLeft: 10,
+        marginTop: 20,
         justifyContent: 'center',
         fontWeight: 'bold'
     },
+    editButton:{
+        backgroundColor:'white',
+        margin: 10,
+        alignSelf: 'flex-end',
+        fontSize: 40
+    },
+    modalStyle:{
+        backgroundColor: 'white',
+        padding: 10,
+        marginTop: 50,
+        marginRight: 20,
+        marginBottom: 30,
+        marginLeft: 20,
+        borderRadius: 10 
+    },
+    modalButtons:{
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    modalButton:{
+        color:'black', 
+        fontSize:40,
+        margin: 10
+    }
 });
 
     

@@ -91,19 +91,19 @@ class Profile extends Component {
             
             <Text style={styles.nameText}>{name}</Text>
             <Text style={styles.aboutText}>{email}</Text>
-            {major.length > 0
+            {major && (major.length > 0)
                 ?<Text style={{marginLeft: 10}}>
                    Major: <Text style={styles.aboutText}>{major} </Text>
                 </Text>
                 :null
             }
-            {city.length > 0
+            {city && (city.length > 0)
                 ?<Text style={{marginLeft: 10}}>
                    City: <Text style={styles.aboutText}>{city} </Text>
                 </Text>
                 :null
             }
-            {bio.length > 0
+            {bio && (bio.length > 0)
                 ?<Text style={{marginLeft: 10}}>
                    Bio: <Text style={styles.aboutText}>{bio} </Text>
                 </Text>

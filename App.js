@@ -10,10 +10,11 @@ export default class App extends React.Component {
 
   render() {    
     return (
-      <SafeAreaView style={styles.container}>
-      <Provider store={store}> 
-        <SwitchNavigation/>
-      </Provider>
+      <SafeAreaView style={styles.container} 
+      forceInset={{'top': 'never', 'bottom': 'never'}}>
+        <Provider store={store}> 
+          <SwitchNavigation/>
+        </Provider>
       </SafeAreaView>
     );
   }

@@ -13,10 +13,7 @@ class CardComponent extends React.Component {
       "2": "require('../../images/classico.jpg')"
     }
 
-    userClicked = () => {
-      console.log('user clicked')
-    }
-
+    
     postClicked = () => {
       console.log('post clicked')
     }
@@ -26,7 +23,8 @@ class CardComponent extends React.Component {
       <Card>
         <CardItem>
           <Left>
-            <Thumbnail source={require('../../images/barca.png')}/>
+            <Thumbnail source={require('../../images/barca.png')}
+            button onPress={() => this.props.userClicked()}/>
             <Body>
               <Text>Name</Text>
               <Text note> Dec 15 </Text>
