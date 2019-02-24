@@ -5,12 +5,16 @@ import {Card, CardItem, Thumbnail,
 
 class CardComponent extends React.Component {
 
-  render() {
-    
-    postClicked = () => {
-      console.log('post clicked')
-    }
+  postClicked = () => {
+    console.log('post clicked')
+  }
 
+
+  render() {
+
+    const { postTitle, postDesc, postCreated, userid } = this.props;
+    const dateString = new Date(postCreated).toString().substring(0, 10)
+    
     return (
       <Card>
         <CardItem>
@@ -19,8 +23,8 @@ class CardComponent extends React.Component {
               <Thumbnail source={require('../../images/barca.png')}/>
             </TouchableOpacity>
             <Body>
-              <Text>Name</Text>
-              <Text note> Dec 15 </Text>
+              <Text> userid {userid} </Text>
+              <Text note> {dateString} </Text>
             </Body>
           </Left>
         </CardItem>
@@ -34,14 +38,6 @@ class CardComponent extends React.Component {
               <Icon name="ios-heart"
                 style={{color:'black'}}/> 
             </Button>
-            <Button transparent>
-              <Icon name="ios-chatbubbles"
-                style={{color:'black'}}/> 
-            </Button>
-            <Button transparent>
-              <Icon name="ios-send"
-                style={{color:'black'}}/> 
-            </Button>
           </Left>
         </CardItem>
         <CardItem style={{height:35}}>
@@ -50,10 +46,8 @@ class CardComponent extends React.Component {
         <CardItem>
           <Body>
             <Text>
-              <Text style={{fontWeight:"900"}}>arturo </Text>
-              tioregn ieorngvie anve
-              argvn'iefvne'View
-              nvoenv ea]Viewenfsoiv'ne shouldComponentUpdate              
+              <Text style={{fontWeight:"900"}}>{postTitle} </Text>
+              {postDesc}              
             </Text>
           </Body>
         </CardItem>

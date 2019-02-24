@@ -31,7 +31,7 @@ class CreateEvent extends Component {
         body: JSON.stringify({
         title: this.state.title,
         description: this.state.description,
-        userid: this.props.user[0].id      
+        userid: this.props.user.id      
         })
     })
     .then(response => response.json())
@@ -84,7 +84,7 @@ class CreateEvent extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        user: state
+        user: state.user
     }
 }
 

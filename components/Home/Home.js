@@ -13,23 +13,27 @@ class Home extends Component {
     this.state = {  
         uid: '',
         nameSearch: '',
+        posts: []
     };
     this.userClicked = this.userClicked.bind(this);
   }
 
   getPosts = () => {
-    // console.log('fetching data')
-    // fetch('http://'+localhost+':3000/getEvents', {
-    //     method: 'get',
-    //     headers: {'Content-Type': 'application/json'},
-    // })
-    // .then(response => response.json())
-    //   .then(post => {
-    //     if(post.id){
-
-    //     }
-    //   })
-    //   .catch( err => console.log(err));
+    console.log('fetching data')
+    fetch('http://'+localhost+':3000/getEvents/0', {
+        method: 'get',
+        headers: {'Content-Type': 'application/json'},
+    })
+    .then(response => response.json())
+      .then(post => {
+        if(post){
+          console.log('number of posts', post.length)
+          this.setState({
+            posts: post
+          })
+        }
+      })
+      .catch( err => console.log(err));
   }
   
   componentDidMount(){
@@ -60,6 +64,7 @@ class Home extends Component {
 
 
   render() {
+    const { posts } = this.state;
     return (
         <Container style={styles.container}>
           <Header searchBar rounded style={{marginTop: -35}}>
@@ -75,10 +80,17 @@ class Home extends Component {
             <Text>Search</Text>
           </Button>
         </Header>
-          <Content>
-            <CardComponent userClicked={this.userClicked} imageSource="1" likes="101"/>
-            <CardComponent userClicked={this.userClicked} imageSource="2" likes="201"/>
-            <CardComponent userClicked={this.userClicked} imageSource="3" likes="301"/>
+        <Content>
+          {posts.map((post) => {
+            return(
+                <CardComponent userClicked={this.userClicked}
+                  postTitle={post.title} 
+                  postDesc={post.description}
+                  postCreated={post.created}
+                  userid={post.userid}
+                  imageSource="1" likes="101"/>
+            )
+          })}
           </Content>
         </Container>
     );
