@@ -4,7 +4,7 @@ const usersReducer = (state = [], action) => {
             console.log('users reducer')
             console.log('payload', action.payload.users)
             return [
-                ...state, action.payload.users
+                action.payload.users
             ]
         }
         default:
