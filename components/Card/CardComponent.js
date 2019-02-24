@@ -1,30 +1,23 @@
 import React, { Component } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import {Card, CardItem, Thumbnail, 
         Body, Left, Right, Button, Icon} from 'native-base';
 
 class CardComponent extends React.Component {
 
   render() {
-
-    const images = {
-      "1": "require('../../images/classico.jpg')",
-      "2": "require('../../images/classico.jpg')",
-      "2": "require('../../images/classico.jpg')"
-    }
-
     
     postClicked = () => {
       console.log('post clicked')
     }
 
-
     return (
       <Card>
         <CardItem>
           <Left>
-            <Thumbnail source={require('../../images/barca.png')}
-            button onPress={() => this.props.userClicked()}/>
+            <TouchableOpacity onPress={() => this.props.userClicked()}>
+              <Thumbnail source={require('../../images/barca.png')}/>
+            </TouchableOpacity>
             <Body>
               <Text>Name</Text>
               <Text note> Dec 15 </Text>

@@ -1,8 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text,  View} from 'react-native';
-import {Content, Card, CardItem, Thumbnail, 
-   Right, Icon} from 'native-base';
-import {connect} from 'react-redux';
+import { StyleSheet, Text,  View } from 'react-native';
+import { Content, Card, CardItem, Thumbnail } from 'native-base';
+import { connect } from 'react-redux';
 
 class FindUsers extends React.Component {
 
@@ -11,15 +10,7 @@ class FindUsers extends React.Component {
     this.state = {
         uids: [],
     }
-}
-
-  componentDidMount(){
-    const { uids } = this.state;
-    console.log('findUsers props from store', this.props.users[0])
-    this.props.users[0].map(function (users) {
-      uids.push(users.id)
-    })
-}
+  }
 
   render() {    
     return (
@@ -42,9 +33,7 @@ class FindUsers extends React.Component {
            </Card>
           )})}
         </Content>
-      </View>
-
-      
+      </View>   
 
     );
   }

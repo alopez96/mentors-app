@@ -14,7 +14,7 @@ class Home extends Component {
         uid: '',
         nameSearch: '',
     };
-    this.userClick = this.userClick.bind(this);
+    this.userClicked = this.userClicked.bind(this);
   }
 
   getPosts = () => {
@@ -53,9 +53,9 @@ class Home extends Component {
     .catch( err => console.log(err));
   }
 
-  userClick () {
+  userClicked () {
     console.log('user clicked')
-    this.props.navigation.navigate('User')
+    this.props.navigation.navigate('userScreen')
   }
 
 
@@ -76,9 +76,9 @@ class Home extends Component {
           </Button>
         </Header>
           <Content>
-            <CardComponent userClick={this.userClick} imageSource="1" likes="101"/>
-            <CardComponent imageSource="2" likes="201"/>
-            <CardComponent imageSource="3" likes="301"/>
+            <CardComponent userClicked={this.userClicked} imageSource="1" likes="101"/>
+            <CardComponent userClicked={this.userClicked} imageSource="2" likes="201"/>
+            <CardComponent userClicked={this.userClicked} imageSource="3" likes="301"/>
           </Content>
         </Container>
     );
