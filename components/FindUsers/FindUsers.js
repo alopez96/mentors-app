@@ -1,5 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text,  View} from 'react-native';
+import {Content, Card, CardItem, Thumbnail, 
+   Right, Icon} from 'native-base';
 import {connect} from 'react-redux';
 
 class FindUsers extends React.Component {
@@ -22,14 +24,27 @@ class FindUsers extends React.Component {
   render() {    
     return (
       <View style={styles.container}>
-          {this.props.users[0].map((user) => {
-            return(
-            <Text>
-              {user.name}
-            </Text>
-            )
-          })}
+        <Content>
+        {this.props.users[0].map((user) => {
+          return(
+          <Card>
+            <CardItem>
+              <Thumbnail source={require('../../images/barca.png')}
+                button />
+              <Text style={{marginLeft:10}}>{user.name} • </Text>
+              {user.city && (user.city.length > 0)
+              ?<Text>{user.city} • </Text>
+              :null}
+              {user.major && (user.major.length > 0)
+              ?<Text>{user.major}</Text>
+              :null}
+             </CardItem>
+           </Card>
+          )})}
+        </Content>
       </View>
+
+      
 
     );
   }
