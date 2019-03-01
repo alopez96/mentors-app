@@ -11,25 +11,25 @@ class User extends Component {
     constructor() {
         super();
         this.state = {
-            name: '',
-            email: '',
-            img: '',
-            major: '',
-            city: '',
-            bio: '',
+            postids: [],
         }
     }
 
     onPictureZoom = () => {
-        console.log('image zoom')
+        console.log('click image')
     }
 
-    componentDidMount() {
-        console.log('get', this.props.users[0])
+    componentDidMount(){
+        console.log('get posts from store', this.props.posts)
+        const { post } = this.state;
+        this.props.posts[0].map(function (posted) {
+          postids.push(posted.id)
+        })
     }
+
     render() {
 
-        var {name, email, major, city, bio} = this.state;
+        var { name, email, major, city, bio } = this.state;
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <Button style={styles.editButton} 
@@ -42,7 +42,6 @@ class User extends Component {
                     onPress={() => this.onPictureZoom()}>
                     <Thumbnail style={styles.image} source={require('../../images/barca.png')}/>
                 </TouchableOpacity>
-               
             
             <Text style={styles.nameText}>{name}</Text>
             <Text style={styles.aboutText}>{email}</Text>
@@ -73,7 +72,9 @@ class User extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        users: state.users
+        users: state.users,
+        posts: state.posts,
+        user: state.user
     }
   }
   

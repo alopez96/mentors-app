@@ -17,7 +17,7 @@ class FindUsers extends React.Component {
     this.props.users[0].map(function (users) {
       uids.push(users.id)
     })
-}
+  }
 
   render() {    
     return (

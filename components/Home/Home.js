@@ -46,12 +46,12 @@ class Home extends Component {
         headers: {'Content-Type': 'application/json'},
     })
     .then(response => response.json())
-      .then(post => {
-        if(post){
-          this.props.getPosts(post)
-          console.log('number of posts', post.length)
+      .then(posts => {
+        if(posts){
+          this.props.storePostInStore(posts)
+          console.log('number of posts', posts.length)
           this.setState({
-            posts: post
+            posts: posts
           })
         }
       })
@@ -106,10 +106,10 @@ const mapDispatchToProps = (dispatch) => {
         users
       }
     }),
-    getPosts: (users) => dispatch({
+    storePostInStore: (posts) => dispatch({
       type: 'GET_POSTS',
       payload: {
-        users
+        posts
       }
     }),
   }

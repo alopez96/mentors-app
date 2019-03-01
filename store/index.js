@@ -6,7 +6,7 @@ import postsReducer from '../reducers/posts';
 const allReducers = combineReducers({
     users: usersReducer,
     user: userReducer,
-    post: postsReducer
+    posts: postsReducer
 })
 
 export default store = createStore(allReducers)

@@ -1,9 +1,8 @@
 const postsReducer = (state = [], action) => {
     switch(action.type){
         case 'GET_POSTS':{
-            console.log('posts payload', action.payload.users)
             return [
-                action.payload.users
+                action.payload.posts
             ]
         }
         default:
