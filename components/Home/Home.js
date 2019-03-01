@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import CardComponent from '../Card/CardComponent';
-import {Container, Content, Header, Item,
+import { Container, Content, Header, Item,
    Input, Icon, Button, Text } from 'native-base';
-import {connect} from 'react-redux';
-import {localhost} from '../../localhost';
+import { connect } from 'react-redux';
+import { localhost } from '../../localhost';
 
 class Home extends Component {
 
@@ -18,31 +18,10 @@ class Home extends Component {
     this.userClicked = this.userClicked.bind(this);
   }
 
-  getPosts = () => {
-    fetch('http://'+localhost+':3000/getEvents/0', {
-        method: 'get',
-        headers: {'Content-Type': 'application/json'},
-    })
-    .then(response => response.json())
-      .then(post => {
-        if(post){
-          console.log('number of posts', post.length)
-          this.setState({
-            posts: post
-          })
-        }
-      })
-      .catch( err => console.log(err));
-  }
-  
-  componentDidMount(){
-    this.getPosts();
-  }
-
   search = () => {
     const name = this.state.nameSearch
     console.log('searchName', name)
-    fetch('http://'+localhost+':3000/findUser/' + name, {
+    fetch('http://'+localhost+':3000/findUser/'+name, {
         method: 'get',
         headers: {'Content-Type': 'application/json'},
     })
@@ -60,6 +39,29 @@ class Home extends Component {
     console.log('user clicked')
     this.props.navigation.navigate('userScreen')
   }
+  
+  getPosts = () => {
+    fetch('http://'+localhost+':3000/getEvents/0', {
+        method: 'get',
+        headers: {'Content-Type': 'application/json'},
+    })
+    .then(response => response.json())
+      .then(post => {
+        if(post){
+          this.props.getPosts(post)
+          console.log('number of posts', post.length)
+          this.setState({
+            posts: post
+          })
+        }
+      })
+      .catch( err => console.log(err));
+  }
+  
+  componentDidMount(){
+    this.getPosts();
+  }
+
 
 
   render() {
@@ -103,7 +105,13 @@ const mapDispatchToProps = (dispatch) => {
       payload: {
         users
       }
-    })
+    }),
+    getPosts: (users) => dispatch({
+      type: 'GET_POSTS',
+      payload: {
+        users
+      }
+    }),
   }
 }
 

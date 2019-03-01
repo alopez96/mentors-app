@@ -4,6 +4,7 @@ import { View, StyleSheet, Text,
     TouchableOpacity,KeyboardAvoidingView} from 'react-native';
 import { Button, Icon } from 'native-base';
 import { Thumbnail } from 'native-base';
+import { connect } from 'react-redux';
 
 
 class User extends Component {
@@ -23,6 +24,9 @@ class User extends Component {
         console.log('image zoom')
     }
 
+    componentDidMount() {
+        console.log('get', this.props.users[0])
+    }
     render() {
 
         var {name, email, major, city, bio} = this.state;
@@ -66,7 +70,14 @@ class User extends Component {
     }
 }
 
-export default User;
+
+const mapStateToProps = (state) => {
+    return {
+        users: state.users
+    }
+  }
+  
+export default connect(mapStateToProps)(User);
 
 const styles = StyleSheet.create({
     toolbar:{

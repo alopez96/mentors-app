@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import { Button, Icon } from 'native-base';
 import Modal from 'react-native-modal';
 import { Thumbnail, Form, Item, Input } from 'native-base';
-import {localhost} from '../../localhost';
+import { localhost } from '../../localhost';
 import { RNS3 } from 'react-native-aws3';
 import { ImagePicker, Permissions } from 'expo';
 import { myAccessKey, mySecretKey } from '../../s3';

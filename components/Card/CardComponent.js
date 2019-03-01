@@ -20,7 +20,6 @@ class CardComponent extends React.Component {
   }
 
   componentWillMount(){
-    console.log('will mount')
     fetch('http://'+localhost+':3000/profile/'+this.props.userid, {
         method: 'get',
         headers: {'Content-Type': 'application/json'},
@@ -28,7 +27,6 @@ class CardComponent extends React.Component {
     .then(response => response.json())
       .then(user => {
         if(user){
-          console.log('user', user)
           this.setState({
             uid: user.uid,
             name: user.name,

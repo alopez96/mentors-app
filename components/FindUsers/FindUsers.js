@@ -14,7 +14,6 @@ class FindUsers extends React.Component {
 
   componentDidMount(){
     const { uids } = this.state;
-    console.log('fundUsers', this.props.users[0])
     this.props.users[0].map(function (users) {
       uids.push(users.id)
     })
