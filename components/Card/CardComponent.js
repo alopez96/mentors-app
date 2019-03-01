@@ -2,17 +2,46 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import {Card, CardItem, Thumbnail, 
         Body, Left, Right, Button, Icon} from 'native-base';
+import {localhost} from '../../localhost';
 
 class CardComponent extends React.Component {
+
+  constructor() {
+    super();
+    this.state = {
+        uid: '',
+        name: '',
+        isLoading: true
+    }
+  }
 
   postClicked = () => {
     console.log('post clicked')
   }
 
+  componentWillMount(){
+    console.log('will mount')
+    fetch('http://'+localhost+':3000/profile/'+this.props.userid, {
+        method: 'get',
+        headers: {'Content-Type': 'application/json'},
+    })
+    .then(response => response.json())
+      .then(user => {
+        if(user){
+          console.log('user', user)
+          this.setState({
+            uid: user.uid,
+            name: user.name,
+            isLoading: false
+          })
+        }
+      })
+      .catch( err => console.log(err));
+}
 
   render() {
 
-    const { postTitle, postDesc, postCreated, userid } = this.props;
+    const { postTitle, postDesc, postCreated } = this.props;
     const dateString = new Date(postCreated).toString().substring(0, 10)
     
     return (
@@ -23,7 +52,7 @@ class CardComponent extends React.Component {
               <Thumbnail source={require('../../images/barca.png')}/>
             </TouchableOpacity>
             <Body>
-              <Text> userid {userid} </Text>
+              <Text style={{fontWeight:"700"}}> {this.state.name} </Text>
               <Text note> {dateString} </Text>
             </Body>
           </Left>
