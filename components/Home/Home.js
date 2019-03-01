@@ -19,7 +19,6 @@ class Home extends Component {
   }
 
   getPosts = () => {
-    console.log('fetching data')
     fetch('http://'+localhost+':3000/getEvents/0', {
         method: 'get',
         headers: {'Content-Type': 'application/json'},

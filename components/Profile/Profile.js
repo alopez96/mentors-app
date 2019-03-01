@@ -1,15 +1,19 @@
 
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, Image, 
-    TouchableOpacity,KeyboardAvoidingView,
-    ScrollView,TextInput } from 'react-native';
-import Toast, {DURATION} from'react-native-easy-toast';
+import { View, StyleSheet, Text,
+    TouchableOpacity,KeyboardAvoidingView} from 'react-native';
 import {connect} from 'react-redux';
 import { Button, Icon } from 'native-base';
 import Modal from 'react-native-modal';
 import { Thumbnail, Form, Item, Input } from 'native-base';
 import {localhost} from '../../localhost';
+import { RNS3 } from 'react-native-aws3';
+import { ImagePicker, Permissions } from 'expo';
+import { myAccessKey, mySecretKey } from '../../s3';
+import v1 from 'uuid/v1';
+import Loader from '../Spinner/Loader';
 
+const awsPrefix = 'https://s3-us-west-2.amazonaws.com/mentorsdb-images/';
 
 class Profile extends Component {
     constructor() {
@@ -17,17 +21,79 @@ class Profile extends Component {
         this.state = {
             name: '',
             email: '',
-            img: '',
+            imageurl: awsPrefix + '',
             major: '',
             city: '',
             bio: '',
             isModalVisible: false,
+            isLoading: true
         }
     }
 
-    onChangePicture = () => {
+    askPermissionsAsync = async () => {
+        // await Permissions.askAsync(Permissions.CAMERA);
+        Permissions.askAsync(Permissions.CAMERA_ROLL);
+      };
+
+    onChangePicture = async () => {
         console.log('change image')
-    }
+        await this.askPermissionsAsync();
+        try {
+        console.log('inside try')
+        let result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            aspect: [4, 3],
+            base64: false,
+        });
+        if (result.cancelled)
+            return;
+        const key = `${v1()}.jpeg`;
+        const file = {
+            uri: result.uri,
+            type: 'image/jpeg',
+            name: key
+        };
+        const options = {
+            keyPrefix: 'uploads/',
+            bucket: 'mentorsdb-images',
+            region: 'us-west-2',
+            accessKey: myAccessKey,
+            secretKey: mySecretKey,
+            successActionStatus: 201
+        }
+        await RNS3.put(file, options)
+        .progress((e) => console.log(e.loaded / e.total))
+        .then((response) => {
+            console.log('image response', response);
+            this.setState({
+                imageurl: awsPrefix + response.body.postResponse.key
+            });
+            this.uploadImage(response.body.postResponse.key)
+        }).catch((err) => { console.log(err) });
+        } catch (error) {
+        console.log(error);
+        };
+  };
+
+  uploadImage = (imageurl) => {
+    fetch('http://'+localhost+':3000/editProfile', {
+        method: 'put',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            userid: this.props.user.id,
+            imageurl: imageurl
+        })
+    })
+    .then(user => {
+        if(user){
+            console.log('profile image updated', user.imageurl)
+        }
+        else{
+            console.log('error updating profile image')
+        }
+        })
+    .catch( err => console.log(err));
+}
 
     toogleModal = () => {
         this.setState({
@@ -62,20 +128,27 @@ class Profile extends Component {
         .catch( err => console.log(err));
     }
 
-    componentDidMount(){
-        console.log('profile props user', this.props.user)
+    async componentDidMount(){
+        const response = await fetch('http://'+localhost+':3000/profile/'+this.props.user.id, {
+            method: 'get',
+            headers: {'Content-Type': 'application/json'},
+        })
+        const user = await response.json();
         this.setState({
             name: this.props.user.name,
             email: this.props.user.email,
+            imageurl: awsPrefix + user.imageurl,
             major: this.props.user.major,
             city: this.props.user.city,
-            bio: this.props.user.bio
+            bio: this.props.user.bio,
+            isLoading: false
         })
     }
 
     render() {
 
-        var {name, email, major, city, bio} = this.state;
+        var {name, email, major, city, bio, isLoading} = this.state;
+        if (isLoading) return <Loader />; 
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
             <Button style={styles.editButton} 
@@ -86,9 +159,8 @@ class Profile extends Component {
             <View style={{ height: 120, backgroundColor: '#c0c0c0' }}></View>
                 <TouchableOpacity style={styles.avatar} 
                     onPress={() => this.onChangePicture()}>
-                    <Thumbnail style={styles.image} source={require('../../images/barca.png')}/>
-                </TouchableOpacity>
-               
+                    <Thumbnail style={styles.image} source= {{uri: this.state.imageurl}}/>
+                </TouchableOpacity>  
             
             <Text style={styles.nameText}>{name}</Text>
             <Text style={styles.aboutText}>{email}</Text>

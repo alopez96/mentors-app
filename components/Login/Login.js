@@ -12,14 +12,13 @@ class Login extends React.Component {
   constructor(props){
     super(props);
     this.state = {  
-        email: '',
-        password: '',
+        email: 'arturo@ucsc.edu',
+        password: '123',
     };
 }
 
 validateInput = () => {
   const { email, password } = this.state;
-  console.log('validating input')
   let errors = {};
   if (email == null || !email.includes('@ucsc.edu')){
       errors['email'] = 'Email must be a UCSC email'
@@ -32,8 +31,7 @@ validateInput = () => {
       this.signInUser()
   }
   else {
-      console.log(Object.values(errors))
-      // this.refs.toast.show(Object.values(errors).join(), 500)
+      this.refs.toast.show(Object.values(errors).join(''), 2000)
   }
 }
 
@@ -48,7 +46,6 @@ onPasswordInputChange = (passwordInput) => {
 
 
 signInUser = () => {
-  console.log('signin user')
   fetch('http://'+localhost+':3000/signin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
@@ -60,6 +57,7 @@ signInUser = () => {
   .then(response => response.json())
     .then(user => {
       if(user.id){
+        console.log('User', user)
         this.props.updateUser(user)
         this.props.navigation.navigate('Main')
       }

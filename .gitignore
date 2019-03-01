@@ -6,3 +6,5 @@ npm-debug.*
 *.key
 *.mobileprovision
 localhost.js
+s3.js
+rootkey.csv
