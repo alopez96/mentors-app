@@ -21,7 +21,7 @@ class User extends Component {
 
     componentDidMount(){
         console.log('get posts from store', this.props.posts)
-        const { post } = this.state;
+        const { postids } = this.state;
         this.props.posts[0].map(function (posted) {
           postids.push(posted.id)
         })

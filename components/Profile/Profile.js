@@ -93,7 +93,7 @@ class Profile extends Component {
         }
         })
     .catch( err => console.log(err));
-}
+    }
 
     toogleModal = () => {
         this.setState({

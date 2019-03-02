@@ -1,23 +1,69 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import CardComponent from '../Card/CardComponent';
-import {Container, Content, Header,Form, Item,
-    Textarea, Input, Icon , Button} from 'native-base';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import {Container, Content, Form, Item,
+    Textarea, Input, Icon } from 'native-base';
 import {connect} from 'react-redux';
 import {localhost} from '../../localhost';
+import { RNS3 } from 'react-native-aws3';
+import { ImagePicker, Permissions } from 'expo';
+import { myAccessKey, mySecretKey } from '../../s3';
+import v1 from 'uuid/v1';
+
 
 class CreateEvent extends Component {
-
 
   constructor(props){
     super(props);
     this.state = {  
-        eventid: '',
         title: '',
-        imageurl: '',
         description: '',
+        imageurl: '',
     };
   }
+
+  askPermissionsAsync = async () => {
+    // await Permissions.askAsync(Permissions.CAMERA);
+    Permissions.askAsync(Permissions.CAMERA_ROLL);
+  };
+
+useLibraryHandler = async () => {
+    console.log('change image')
+    await this.askPermissionsAsync();
+    try {
+    console.log('inside try')
+    let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+        base64: false,
+    });
+    if (result.cancelled)
+        return;
+    const key = `${v1()}.jpeg`;
+    const file = {
+        uri: result.uri,
+        type: 'image/jpeg',
+        name: key
+    };
+    const options = {
+        keyPrefix: 'post-images/',
+        bucket: 'mentorsdb-images',
+        region: 'us-west-2',
+        accessKey: myAccessKey,
+        secretKey: mySecretKey,
+        successActionStatus: 201
+    }
+    await RNS3.put(file, options)
+    .progress((e) => console.log(e.loaded / e.total))
+    .then((response) => {
+        console.log('image response', response);
+        this.setState({
+            imageurl: response.body.postResponse.key
+        });
+    }).catch((err) => { console.log(err) });
+    } catch (error) {
+    console.log(error);
+    };
+};
 
   cancelCreateEvent = () => {
     this.props.navigation.navigate('Home')
@@ -31,7 +77,8 @@ class CreateEvent extends Component {
         body: JSON.stringify({
         title: this.state.title,
         description: this.state.description,
-        userid: this.props.user.id      
+        userid: this.props.user.id,
+        imageurl: this.state.imageurl     
         })
     })
     .then(response => response.json())
@@ -40,7 +87,8 @@ class CreateEvent extends Component {
             console.log('postid', post)
             this.setState({
               title: '',
-              description: ''
+              description: '',
+              imageurl: ''
             })
             this.props.navigation.navigate('Home')
         }
@@ -64,6 +112,13 @@ class CreateEvent extends Component {
                 label="description" onChangeText={(description) => this.setState({ description })} 
                 value={description}/>
           </Form>
+
+          <Content>
+            <TouchableOpacity onPress={this.useLibraryHandler}>
+              <Icon name="ios-camera"
+                style={styles.cameraIcon} />
+            </TouchableOpacity>
+          </Content>    
 
           <View style={styles.buttons}>
                 <TouchableOpacity onPress={() => this.cancelCreateEvent()}>
@@ -105,5 +160,9 @@ button:{
     color:'black', 
     fontSize:40,
     margin: 50
-}
+},
+cameraIcon:{
+  fontSize: 40,
+  margin:20
+},
 })

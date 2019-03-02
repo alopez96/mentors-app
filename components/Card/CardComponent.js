@@ -4,6 +4,8 @@ import {Card, CardItem, Thumbnail,
         Body, Left, Right, Button, Icon} from 'native-base';
 import {localhost} from '../../localhost';
 
+const awsPrefix = 'https://s3-us-west-2.amazonaws.com/mentorsdb-images/';
+
 class CardComponent extends React.Component {
 
   constructor() {
@@ -11,6 +13,7 @@ class CardComponent extends React.Component {
     this.state = {
         uid: '',
         name: '',
+        userimage: '',
         isLoading: true
     }
   }
@@ -30,6 +33,7 @@ class CardComponent extends React.Component {
           this.setState({
             uid: user.uid,
             name: user.name,
+            userimage: awsPrefix + user.imageurl,
             isLoading: false
           })
         }
@@ -39,7 +43,8 @@ class CardComponent extends React.Component {
 
   render() {
 
-    const { postTitle, postDesc, postCreated } = this.props;
+    const { postTitle, postDesc, postCreated, imageurl } = this.props;
+    console.log('image', imageurl)
     const dateString = new Date(postCreated).toString().substring(0, 10)
     
     return (
@@ -47,7 +52,8 @@ class CardComponent extends React.Component {
         <CardItem>
           <Left>
             <TouchableOpacity onPress={() => this.props.userClicked()}>
-              <Thumbnail source={require('../../images/barca.png')}/>
+            <Thumbnail
+              source= {{uri: this.state.userimage}}/>
             </TouchableOpacity>
             <Body>
               <Text style={{fontWeight:"700"}}> {this.state.name} </Text>
@@ -56,8 +62,8 @@ class CardComponent extends React.Component {
           </Left>
         </CardItem>
         <CardItem cardBody button onPress={() => this.postClicked}>
-          <Image source={require('../../images/classico.jpg')}
-            style={{height:200, width:null, flex:1}}/>
+        <Thumbnail square style={{height:200, width:null, flex:1}}
+         source= {{uri: imageurl}}/>
         </CardItem>
         <CardItem style={{height:45}}>
           <Left>

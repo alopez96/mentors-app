@@ -6,6 +6,8 @@ import { Container, Content, Header, Item,
 import { connect } from 'react-redux';
 import { localhost } from '../../localhost';
 
+const awsPrefix = 'https://s3-us-west-2.amazonaws.com/mentorsdb-images/';
+
 class Home extends Component {
 
   constructor(props){
@@ -89,7 +91,8 @@ class Home extends Component {
                   postDesc={post.description}
                   postCreated={post.created}
                   userid={post.userid}
-                  imageSource="1" likes="101"/>
+                  imageurl={awsPrefix + post.imageurl}
+                  likes="101"/>
             )
           })}
           </Content>
