@@ -3,6 +3,8 @@ import {StyleSheet, Text,  View} from 'react-native';
 import {Content, Card, CardItem, Thumbnail} from 'native-base';
 import {connect} from 'react-redux';
 
+const awsPrefix = 'https://s3-us-west-2.amazonaws.com/mentorsdb-images/';
+
 class FindUsers extends React.Component {
 
   constructor() {
@@ -20,6 +22,7 @@ class FindUsers extends React.Component {
   }
 
   render() {    
+    console.log('user', this.props.users)
     return (
       <View style={styles.container}>
         <Content>
@@ -27,8 +30,8 @@ class FindUsers extends React.Component {
           return(
           <Card>
             <CardItem>
-              <Thumbnail source={require('../../images/barca.png')}
-                button />
+            <Thumbnail button
+              source= {{uri: awsPrefix + user.imageurl}}/>
               <Text style={{marginLeft:10}}>{user.name} • </Text>
               {user.city && (user.city.length > 0)
               ?<Text>{user.city} • </Text>
