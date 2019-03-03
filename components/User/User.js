@@ -1,8 +1,8 @@
 
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, 
+import { View, StyleSheet,
     TouchableOpacity,KeyboardAvoidingView} from 'react-native';
-import { Button, Icon } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Text, Body } from 'native-base';
 import { Thumbnail } from 'native-base';
 import { localhost } from '../../localhost';
 import { connect } from 'react-redux';
@@ -54,34 +54,50 @@ class User extends Component {
         const { name, email, imageurl, major, city, bio, isLoading } = this.state;
         if (isLoading) return <Loader />; 
         return (
-            <KeyboardAvoidingView behavior='padding' style={styles.container}>
-            <View style={{ height: 120, backgroundColor: '#c0c0c0' }}></View>
+            <Content>
                 <TouchableOpacity style={styles.avatar} 
                     onPress={() => this.onPictureZoom()}>
                     <Thumbnail style={styles.image} source= {{uri: imageurl}}/>
                 </TouchableOpacity>
             
-            <Text style={styles.nameText}>{name}</Text>
-            <Text style={styles.aboutText}>{email}</Text>
-            {major && (major.length > 0)
-                ?<Text style={{marginLeft: 10}}>
-                   Major: <Text style={styles.aboutText}>{major} </Text>
-                </Text>
-                :null
-            }
-            {city && (city.length > 0)
-                ?<Text style={{marginLeft: 10}}>
-                   City: <Text style={styles.aboutText}>{city} </Text>
-                </Text>
-                :null
-            }
-            {bio && (bio.length > 0)
-                ?<Text style={{marginLeft: 10}}>
-                   Bio: <Text style={styles.aboutText}>{bio} </Text>
-                </Text>
-                :null
-            }              
-    </KeyboardAvoidingView>
+            
+            <Container>
+                <Content>
+                <Header />
+                <Card style={{height:200, width:null, flex:1}}>
+                    <Body>
+                    <Text style={styles.nameText}>{name}</Text>
+                    </Body>
+                    <Body>
+                        <Text style={styles.aboutText}>{email}</Text>
+                        {major && (major.length > 0)
+                            ?<Text>
+                            Major: <Text style={styles.aboutText}>{major} </Text>
+                            </Text>
+                            :null
+                        }
+                    </Body>
+                    <Body>
+                    {city && (city.length > 0)
+                    ?<Text>
+                    City: <Text style={styles.aboutText}>{city} </Text>
+                    </Text>
+                    :null
+                    }
+                    </Body>
+                    <Body>
+                        {bio && (bio.length > 0)
+                        ?<Text>
+                        Bio: <Text style={styles.aboutText}>{bio} </Text>
+                        </Text>
+                        :null
+                        }
+                    </Body>
+                    
+                </Card>
+                </Content>
+                </Container>              
+    </Content>
     );
     }
 }
@@ -118,10 +134,9 @@ const styles = StyleSheet.create({
      avatar: {
         borderRadius: 60,
         borderWidth: 2,
-        borderColor: "#fff",
+        borderColor: "#c0c0c0",
         marginBottom: 10,
         alignSelf: 'center',
-        position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 80
@@ -133,15 +148,12 @@ const styles = StyleSheet.create({
         borderRadius: 50,
     },
     nameText:{
-        marginTop: 100,
         fontSize: 24,
-        marginLeft: 10,
+        marginTop: 20,
         justifyContent: 'center',
         fontWeight: 'bold'
     },
     aboutText:{
-        marginLeft: 10,
-        marginTop: 20,
         justifyContent: 'center',
         fontWeight: 'bold'
     },
