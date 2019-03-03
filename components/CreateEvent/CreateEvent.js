@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import {Container, Content, Form, Item,
-    Textarea, Input, Icon } from 'native-base';
+    Textarea, Input, Icon, Thumbnail } from 'native-base';
 import {connect} from 'react-redux';
 import {localhost} from '../../localhost';
 import { RNS3 } from 'react-native-aws3';
@@ -9,6 +9,7 @@ import { ImagePicker, Permissions } from 'expo';
 import { myAccessKey, mySecretKey } from '../../s3';
 import v1 from 'uuid/v1';
 
+const awsPrefix = 'https://s3-us-west-2.amazonaws.com/mentorsdb-images/';
 
 class CreateEvent extends Component {
 
@@ -18,6 +19,7 @@ class CreateEvent extends Component {
         title: '',
         description: '',
         imageurl: '',
+        uri: 'https://facebook.github.io/react/logo-og.png'
     };
   }
 
@@ -57,7 +59,8 @@ useLibraryHandler = async () => {
     .then((response) => {
         console.log('image response', response);
         this.setState({
-            imageurl: response.body.postResponse.key
+            imageurl: response.body.postResponse.key,
+            uri: awsPrefix + response.body.postResponse.key,
         });
     }).catch((err) => { console.log(err) });
     } catch (error) {
@@ -115,8 +118,8 @@ useLibraryHandler = async () => {
 
           <Content>
             <TouchableOpacity onPress={this.useLibraryHandler}>
-              <Icon name="ios-camera"
-                style={styles.cameraIcon} />
+                <Thumbnail square large style={styles.cameraIcon}
+                 source= {{uri: this.state.uri}}/>
             </TouchableOpacity>
           </Content>    
 
@@ -162,7 +165,8 @@ button:{
     margin: 50
 },
 cameraIcon:{
-  fontSize: 40,
-  margin:20
+  margin:20,
+  borderRadius: 2,
+  alignSelf: 'center',
 },
 })
