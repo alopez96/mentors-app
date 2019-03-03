@@ -43,7 +43,7 @@ class Home extends Component {
   }
   
   getPosts = () => {
-    fetch('http://'+localhost+':3000/getEvents/0', {
+    fetch('http://'+localhost+':3000/getEvents/', {
         method: 'get',
         headers: {'Content-Type': 'application/json'},
     })
