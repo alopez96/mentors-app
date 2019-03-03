@@ -4,14 +4,24 @@ import { View, StyleSheet, Text,
     TouchableOpacity,KeyboardAvoidingView} from 'react-native';
 import { Button, Icon } from 'native-base';
 import { Thumbnail } from 'native-base';
+import { localhost } from '../../localhost';
 import { connect } from 'react-redux';
+import Loader from '../Spinner/Loader';
 
+const awsPrefix = 'https://s3-us-west-2.amazonaws.com/mentorsdb-images/';
 
 class User extends Component {
     constructor() {
         super();
         this.state = {
-            postids: [],
+            userid: '',
+            name: '',
+            email: '',
+            imageurl: '',
+            major: '',
+            city: '',
+            bio: '',
+            isLoading: true
         }
     }
 
@@ -20,27 +30,35 @@ class User extends Component {
     }
 
     componentDidMount(){
-        console.log('get posts from store', this.props.posts)
-        const { postids } = this.state;
-        this.props.posts[0].map(function (posted) {
-          postids.push(posted.id)
+        console.log('userid inside user', this.props.userid);
+        fetch('http://'+localhost+':3000/profile/'+this.props.userid, {
+            method: 'get',
+            headers: {'Content-Type': 'application/json'},
         })
+        .then(response => response.json())
+        .then(user => {
+            this.setState({
+                name: user.name,
+                email: user.email,
+                imageurl: awsPrefix + user.imageurl,
+                major: user.major,
+                city: user.city,
+                bio: user.bio,
+                isLoading: false
+            })
+        })
+        .catch( err => console.log(err));
     }
 
     render() {
-
-        var { name, email, major, city, bio } = this.state;
+        const { name, email, imageurl, major, city, bio, isLoading } = this.state;
+        if (isLoading) return <Loader />; 
         return (
             <KeyboardAvoidingView behavior='padding' style={styles.container}>
-            <Button style={styles.editButton} 
-                onPress={this.toogleModal}>
-                <Icon name="ios-create"
-                    style={{color:'black'}}/> 
-            </Button>
             <View style={{ height: 120, backgroundColor: '#c0c0c0' }}></View>
                 <TouchableOpacity style={styles.avatar} 
                     onPress={() => this.onPictureZoom()}>
-                    <Thumbnail style={styles.image} source={require('../../images/barca.png')}/>
+                    <Thumbnail style={styles.image} source= {{uri: imageurl}}/>
                 </TouchableOpacity>
             
             <Text style={styles.nameText}>{name}</Text>
@@ -63,7 +81,6 @@ class User extends Component {
                 </Text>
                 :null
             }              
-
     </KeyboardAvoidingView>
     );
     }
@@ -74,7 +91,7 @@ const mapStateToProps = (state) => {
     return {
         users: state.users,
         posts: state.posts,
-        user: state.user
+        userid: state.userid
     }
   }
   
@@ -107,7 +124,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 110
+        marginTop: 80
     },
     image: {    
         width:100,
@@ -128,31 +145,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         fontWeight: 'bold'
     },
-    editButton:{
-        backgroundColor:'white',
-        margin: 10,
-        alignSelf: 'flex-end',
-        fontSize: 40
-    },
-    modalStyle:{
-        backgroundColor: 'white',
-        padding: 10,
-        marginTop: 50,
-        marginRight: 20,
-        marginBottom: 30,
-        marginLeft: 20,
-        borderRadius: 10 
-    },
-    modalButtons:{
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    modalButton:{
-        color:'black', 
-        fontSize:40,
-        margin: 10
-    }
 });
 
     

@@ -37,8 +37,8 @@ class Home extends Component {
     .catch( err => console.log(err));
   }
 
-  userClicked () {
-    console.log('user clicked')
+  userClicked (index) {
+    this.props.viewUserid(index)
     this.props.navigation.navigate('userScreen')
   }
   
@@ -113,6 +113,12 @@ const mapDispatchToProps = (dispatch) => {
       type: 'GET_POSTS',
       payload: {
         posts
+      }
+    }),
+    viewUserid: (userid) => dispatch({
+      type: 'VIEW_USER',
+      payload: {
+        userid
       }
     }),
   }

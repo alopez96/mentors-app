@@ -43,7 +43,7 @@ class CardComponent extends React.Component {
 
   render() {
 
-    const { postTitle, postDesc, postCreated, imageurl } = this.props;
+    const { postTitle, postDesc, postCreated, imageurl, userid } = this.props;
     console.log('image', imageurl)
     const dateString = new Date(postCreated).toString().substring(0, 10)
     
@@ -51,7 +51,7 @@ class CardComponent extends React.Component {
       <Card>
         <CardItem>
           <Left>
-            <TouchableOpacity onPress={() => this.props.userClicked()}>
+            <TouchableOpacity onPress={() => this.props.userClicked(userid)}>
             <Thumbnail
               source= {{uri: this.state.userimage}}/>
             </TouchableOpacity>
