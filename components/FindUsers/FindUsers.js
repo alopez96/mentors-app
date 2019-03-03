@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Text,  View} from 'react-native';
+import {StyleSheet, Text,  View, TouchableOpacity} from 'react-native';
 import {Content, Card, CardItem, Thumbnail} from 'native-base';
 import {connect} from 'react-redux';
 
@@ -12,7 +12,12 @@ class FindUsers extends React.Component {
     this.state = {
         uids: [],
     }
-}
+  }
+
+  userClicked (index) {
+    this.props.viewUserid(index)
+    this.props.navigation.navigate('userScreen')
+  }
 
   componentDidMount(){
     const { uids } = this.state;
@@ -30,8 +35,10 @@ class FindUsers extends React.Component {
           return(
           <Card>
             <CardItem>
-            <Thumbnail button
-              source= {{uri: awsPrefix + user.imageurl}}/>
+            <TouchableOpacity onPress={() => this.userClicked(user.id)}>
+              <Thumbnail button
+                source= {{uri: awsPrefix + user.imageurl}}/>
+            </TouchableOpacity>
               <Text style={{marginLeft:10}}>{user.name} • </Text>
               {user.city && (user.city.length > 0)
               ?<Text>{user.city} • </Text>
@@ -56,7 +63,20 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(FindUsers);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    viewUserid: (userid) => dispatch({
+      type: 'VIEW_USER',
+      payload: {
+        userid
+      }
+    }),
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(FindUsers);
 
 
 const styles = StyleSheet.create({
