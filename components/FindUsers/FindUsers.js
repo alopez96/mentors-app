@@ -27,7 +27,6 @@ class FindUsers extends React.Component {
   }
 
   render() {    
-    console.log('user', this.props.users)
     return (
       <View style={styles.container}>
         <Content>

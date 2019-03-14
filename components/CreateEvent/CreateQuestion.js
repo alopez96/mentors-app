@@ -9,13 +9,14 @@ import { ImagePicker, Permissions } from 'expo';
 import { myAccessKey, mySecretKey, awsPrefix } from '../../s3';
 import v1 from 'uuid/v1';
 
-class CreateEvent extends Component {
+class CreateQuestion extends Component {
 
   constructor(props){
     super(props);
     this.state = {  
+        subject: '',
         title: '',
-        description: '',
+        body: '',
         imageurl: '',
         uri: 'https://facebook.github.io/react/logo-og.png'
     };
@@ -53,7 +54,6 @@ useLibraryHandler = async () => {
     await RNS3.put(file, options)
     .progress((e) => console.log(e.loaded / e.total))
     .then((response) => {
-        console.log('image response', response);
         this.setState({
             imageurl: response.body.postResponse.key,
             uri: awsPrefix + response.body.postResponse.key,
@@ -69,24 +69,25 @@ useLibraryHandler = async () => {
   }
 
   createEventAction = () => {
-    fetch('http://'+localhost+':3000/createEvent', {
+    fetch('http://'+localhost+':3000/createQuestion', {
         method: 'post',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
-        title: this.state.title,
-        description: this.state.description,
-        userid: this.props.user.id,
-        imageurl: this.state.imageurl     
+            subject: this.state.subject,
+            title: this.state.title,
+            body: this.state.body,
+            userid: this.props.user.id,
+            imageurl: this.state.imageurl     
         })
     })
     .then(response => response.json())
         .then(post => {
         if(post){
-            console.log('postid', post)
             this.setState({
-              title: '',
-              description: '',
-              imageurl: ''
+                subject: '',
+                title: '',
+                body: '',
+                imageurl: ''
             })
             this.props.navigation.navigate('Home')
         }
@@ -95,20 +96,26 @@ useLibraryHandler = async () => {
   }
 
   render() {
-      var { title, description } = this.state;
+      var { subject, title, body } = this.state;
     return (
         <Container>
         <Content>
           <Form>
+          <Item>
+              <Input placeholder="subject"
+                        label='subject'
+                        onChangeText={(subject) => this.setState({ subject })}
+                        value={subject}/>
+            </Item>
             <Item>
               <Input placeholder="title"
                         label='title'
                         onChangeText={(title) => this.setState({ title })}
                         value={title}/>
             </Item>
-            <Textarea rowSpan={5} bordered placeholder="description"
-                label="description" onChangeText={(description) => this.setState({ description })} 
-                value={description}/>
+            <Textarea rowSpan={5} bordered placeholder="body"
+                label="body" onChangeText={(body) => this.setState({ body })} 
+                value={body}/>
           </Form>
 
           <Content>
@@ -141,7 +148,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps)(CreateEvent);
+export default connect(mapStateToProps)(CreateQuestion);
 
 
 const styles = StyleSheet.create({

@@ -26,11 +26,9 @@ class User extends Component {
     }
 
     onPictureZoom = () => {
-        console.log('click image')
     }
 
     componentDidMount(){
-        console.log('userid inside user', this.props.userid);
         fetch('http://'+localhost+':3000/profile/'+this.props.userid, {
             method: 'get',
             headers: {'Content-Type': 'application/json'},

@@ -5,10 +5,9 @@ import { Container, Content, Header, Item,
    Input, Icon, Button, Text } from 'native-base';
 import { connect } from 'react-redux';
 import { localhost } from '../../localhost';
+import { awsPrefix } from './../../s3';
 
-const awsPrefix = 'https://s3-us-west-2.amazonaws.com/mentorsdb-images/';
-
-class Home extends Component {
+class Questions extends Component {
 
   constructor(props){
     super(props);
@@ -22,7 +21,7 @@ class Home extends Component {
 
   search = () => {
     const name = this.state.nameSearch
-    fetch('http://'+localhost+':3000/findUser/'+name, {
+    fetch('http://'+localhost+':3000/findQuestion/'+name, {
         method: 'get',
         headers: {'Content-Type': 'application/json'},
     })
@@ -42,7 +41,7 @@ class Home extends Component {
   }
   
   getPosts = () => {
-    fetch('http://'+localhost+':3000/getEvents', {
+    fetch('http://'+localhost+':3000/getQuestions', {
         method: 'get',
         headers: {'Content-Type': 'application/json'},
     })
@@ -107,10 +106,10 @@ const mapDispatchToProps = (dispatch) => {
         users
       }
     }),
-    storePostInStore: (posts) => dispatch({
-      type: 'GET_POSTS',
+    storePostInStore: (questions) => dispatch({
+      type: 'GET_QUESTIONS',
       payload: {
-        posts
+        questions
       }
     }),
     viewUserid: (userid) => dispatch({
@@ -122,7 +121,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(null, mapDispatchToProps)(Questions);
 
 const styles = StyleSheet.create({
   container: {

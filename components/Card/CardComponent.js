@@ -19,7 +19,6 @@ class CardComponent extends React.Component {
   }
 
   postClicked = () => {
-    console.log('post clicked')
   }
 
   componentWillMount(){
@@ -44,7 +43,6 @@ class CardComponent extends React.Component {
   render() {
 
     const { postTitle, postDesc, postCreated, imageurl, userid } = this.props;
-    console.log('image', imageurl)
     const dateString = new Date(postCreated).toString().substring(0, 10)
     
     return (

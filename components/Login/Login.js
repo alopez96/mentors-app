@@ -57,7 +57,6 @@ signInUser = () => {
   .then(response => response.json())
     .then(user => {
       if(user.id){
-        console.log('User', user)
         this.props.updateUser(user)
         this.props.navigation.navigate('Main')
       }

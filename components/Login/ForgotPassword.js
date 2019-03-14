@@ -15,7 +15,6 @@ export default class ForgotPassword extends React.Component {
     
     validateInput = () => {
         const {  email } = this.state;
-        console.log('submit clicked')
         let errors = {};
         if (email === null || email === ''){
             errors['email'] = 'Please Enter An E-mail'

@@ -18,7 +18,6 @@ export default class SignUp extends React.Component {
     
     validateInput = () => {
         const { name, email, password } = this.state;
-        console.log('submit clicked')
         let errors = {};
         if (name == null || email.length == 0){
             errors['name'] = 'Please enter your full name'
@@ -64,7 +63,6 @@ export default class SignUp extends React.Component {
     .then(response => response.json())
     .then(user => {
     if(typeof(user) == 'number'){
-        console.log('registered user id ', user) 
         this.props.navigation.navigate('Login')
     }
     else{
