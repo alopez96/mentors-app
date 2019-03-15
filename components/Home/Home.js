@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import CardComponent from '../Card/CardComponent';
+import CardComponent from './Card/CardComponent';
 import { Container, Content, Header, Item,
    Input, Icon, Button, Text } from 'native-base';
 import { connect } from 'react-redux';

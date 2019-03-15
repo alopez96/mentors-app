@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { View, Text, Image, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { Text, TouchableOpacity } from 'react-native';
 import {Card, CardItem, Thumbnail, 
-        Body, Left, Right, Button, Icon} from 'native-base';
-import {localhost} from '../../localhost';
+        Body, Left, Button, Icon} from 'native-base';
 
 const awsPrefix = 'https://s3-us-west-2.amazonaws.com/mentorsdb-images/';
 
@@ -18,11 +17,8 @@ class CardComponent extends React.Component {
     }
   }
 
-  postClicked = () => {
-  }
-
   componentWillMount(){
-    fetch('http://'+localhost+':3000/profile/'+this.props.userid, {
+    fetch('http://localhost:3000/profile/'+this.props.userid, {
         method: 'get',
         headers: {'Content-Type': 'application/json'},
     })
@@ -59,20 +55,9 @@ class CardComponent extends React.Component {
             </Body>
           </Left>
         </CardItem>
-        <CardItem cardBody button onPress={() => this.postClicked}>
+        <CardItem cardBody>
         <Thumbnail square style={{height:200, width:null, flex:1}}
          source= {{uri: imageurl}}/>
-        </CardItem>
-        <CardItem style={{height:45}}>
-          <Left>
-            <Button transparent>
-              <Icon name="ios-heart"
-                style={{color:'black'}}/> 
-            </Button>
-          </Left>
-        </CardItem>
-        <CardItem style={{height:35}}>
-          <Text>{this.props.likes}</Text>
         </CardItem>
         <CardItem>
           <Body>

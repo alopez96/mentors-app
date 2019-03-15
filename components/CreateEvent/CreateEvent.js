@@ -53,7 +53,6 @@ useLibraryHandler = async () => {
     await RNS3.put(file, options)
     .progress((e) => console.log(e.loaded / e.total))
     .then((response) => {
-        console.log('image response', response);
         this.setState({
             imageurl: response.body.postResponse.key,
             uri: awsPrefix + response.body.postResponse.key,
@@ -82,7 +81,6 @@ useLibraryHandler = async () => {
     .then(response => response.json())
         .then(post => {
         if(post){
-            console.log('postid', post)
             this.setState({
               title: '',
               description: '',

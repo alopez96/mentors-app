@@ -36,10 +36,8 @@ class Profile extends Component {
       };
 
     onChangePicture = async () => {
-        console.log('change image')
         await this.askPermissionsAsync();
         try {
-        console.log('inside try')
         let result = await ImagePicker.launchImageLibraryAsync({
             allowsEditing: true,
             aspect: [4, 3],
@@ -64,7 +62,6 @@ class Profile extends Component {
         await RNS3.put(file, options)
         .progress((e) => console.log(e.loaded / e.total))
         .then((response) => {
-            console.log('image response', response);
             this.setState({
                 imageurl: awsPrefix + response.body.postResponse.key
             });
@@ -86,7 +83,7 @@ class Profile extends Component {
     })
     .then(user => {
         if(user){
-            console.log('profile image updated', user.imageurl)
+            console.log('profile image updated', user)
         }
         else{
             console.log('error updating profile image')
@@ -102,8 +99,6 @@ class Profile extends Component {
     }
 
     submitChanges = () => {
-        console.log(this.props.user.id)
-        console.log(this.state.name)
         fetch('http://'+localhost+':3000/editProfile', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},

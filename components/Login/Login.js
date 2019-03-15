@@ -57,8 +57,14 @@ signInUser = () => {
   .then(response => response.json())
     .then(user => {
       if(user.id){
-        this.props.updateUser(user)
-        this.props.navigation.navigate('Main')
+        if(!user.role){
+          this.props.navigation.navigate('roleScreen')
+          this.props.updateUser(user)
+        }
+        else{
+          this.props.updateUser(user)
+          this.props.navigation.navigate('Main')
+        }
       }
       else{
         this.refs.toast.show(user, 2000)

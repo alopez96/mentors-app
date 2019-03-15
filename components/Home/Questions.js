@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
-import CardComponent from '../Card/CardComponent';
+import QuestionCard from './Card/QuestionCard';
 import { Container, Content, Header, Item,
    Input, Icon, Button, Text } from 'native-base';
 import { connect } from 'react-redux';
@@ -83,13 +83,11 @@ class Questions extends Component {
         <Content>
           {posts.map((post) => {
             return(
-                <CardComponent userClicked={this.userClicked}
+                <QuestionCard userClicked={this.userClicked}
                   postTitle={post.title} 
                   postDesc={post.description}
                   postCreated={post.created}
-                  userid={post.userid}
-                  imageurl={awsPrefix + post.imageurl}
-                  likes="101"/>
+                  userid={post.userid}/>
             )
           })}
           </Content>
