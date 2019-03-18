@@ -16,7 +16,7 @@ import FindUsers from './FindUsers/FindUsers';
 import User from './User/User';
 import Option from './CreateEvent/Option';
 import Role from './Login/Role';
-
+import Post from './Home/Post';
 
 export const AppBottomNavigator = createBottomTabNavigator({
     Home:{
@@ -65,7 +65,8 @@ export const AppStackNavigator = createStackNavigator({
     userScreen: User,
     createEvent: CreateEvent,
     createQuestion: CreateQuestion,
-    roleScreen: Role
+    roleScreen: Role,
+    viewPost: Post
 })
 
 export const SwitchNavigation = createSwitchNavigator({

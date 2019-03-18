@@ -10,12 +10,10 @@ export const postsReducer = (state = [], action) => {
     }
 }
 
-export const questionReducer = (state = [], action) => {
+export const postReducer = (state = [], action) => {
     switch(action.type){
-        case 'GET_QUESTIONS':{
-            return [
-                action.payload.questions
-            ]
+        case 'SELECT_POST':{
+            return action.payload.post
         }
         default:
             return state

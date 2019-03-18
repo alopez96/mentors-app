@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import CardComponent from './Card/CardComponent';
 import { Container, Content, Header, Item,
    Input, Icon, Button, Text } from 'native-base';
@@ -62,6 +62,11 @@ class Home extends Component {
     this.getPosts();
   }
 
+  cardClick = (post) => {
+    this.props.viewPost(post)
+    this.props.navigation.navigate('viewPost')
+  }
+
 
 
   render() {
@@ -84,13 +89,14 @@ class Home extends Component {
         <Content>
           {posts.map((post) => {
             return(
+              <TouchableOpacity onPress={()=> this.cardClick(post)}>
                 <CardComponent userClicked={this.userClicked}
                   postTitle={post.title} 
                   postDesc={post.description}
                   postCreated={post.created}
                   userid={post.userid}
-                  imageurl={awsPrefix + post.imageurl}
-                  likes="101"/>
+                  imageurl={awsPrefix + post.imageurl}/>
+              </TouchableOpacity>
             )
           })}
           </Content>
@@ -117,6 +123,12 @@ const mapDispatchToProps = (dispatch) => {
       type: 'VIEW_USER',
       payload: {
         userid
+      }
+    }),
+    viewPost: (post) => dispatch({
+      type: 'SELECT_POST',
+      payload: {
+        post
       }
     }),
   }
