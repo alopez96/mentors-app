@@ -89,7 +89,7 @@ class Home extends Component {
         <Content>
           {posts.map((post) => {
             return(
-              <TouchableOpacity onPress={()=> this.cardClick(post)}>
+              <TouchableOpacity style={{marginTop:20}} onPress={()=> this.cardClick(post)}>
                 <CardComponent userClicked={this.userClicked}
                   postTitle={post.title} 
                   postDesc={post.description}

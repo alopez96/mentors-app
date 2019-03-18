@@ -99,7 +99,6 @@ onChangePicture = async () => {
         console.log('user does not have permission to edit')
     }
     else{
-        console.log('fetching')
         fetch('http://localhost:3000/editPost', {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
@@ -113,7 +112,35 @@ onChangePicture = async () => {
         })
         .then(post => {
             if(post){
-                console.log('post', post)
+                this.setState({
+                    isModalVisible: !this.state.isModalVisible
+                })
+            }
+            else{
+                console.log('error updating user')
+            }
+            })
+        .catch( err => console.log(err));
+    }
+  }
+
+  deletePost = () => {
+    const { userid, postid } = this.props.post;
+    if(userid != this.state.uid){
+        console.log('user does not have permission to delete')
+    }
+    else{
+        fetch('http://localhost:3000/deletePost', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                postid: postid,
+                userid: this.state.uid
+            })
+        })
+        .then(post => {
+            if(post){
+                console.log('deleted')
                 this.setState({
                     isModalVisible: !this.state.isModalVisible
                 })
@@ -223,9 +250,15 @@ onChangePicture = async () => {
                 </TouchableOpacity>
                 </View>
                 {this.state.imageUpdated == false
-                ?<Button transparent onPress={() => this.onChangePicture()}>
+                ?
+                <Content>
+                <Button transparent onPress={() => this.onChangePicture()}>
                     <Text>Change picture</Text>
                 </Button>
+                <Button transparent danger onPress={() => this.deletePost()}>
+                    <Text>Delete Post</Text>
+                </Button>
+                </Content>
                 :<Button transparent disabled={true} onPress={() => this.onChangePicture()}>
                     <Text>Image updated</Text>
                 </Button>
