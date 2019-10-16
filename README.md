@@ -2,8 +2,6 @@
 
 ## This app is a social media platform for mentors and mentees to connect.
 
-To find this page live visit: https://event-alert-app.netlify.com.
-
 You can find the backend code for this project on GitHub repo: [mentors-api](https://github.com/alopez96/mentors-api).
 
 
@@ -11,7 +9,7 @@ The frontend of this project was created with [React Native App](https://faceboo
 
 ## Installation
 
-Git clone this project, and the server code found on [[mentors-api](https://github.com/alopez96/mentors-api).
+Git clone this project, and the server code found on [mentors-api](https://github.com/alopez96/mentors-api).
 
 ## Usage
 
