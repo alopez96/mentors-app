@@ -1,13 +1,13 @@
 # Mentors United App
 
-## This web app will give you a list of events coming up, based on the city and category.
+## This app is a social media platform for mentors and mentees to connect.
 
 To find this page live visit: https://event-alert-app.netlify.com.
 
 You can find the backend code for this project on GitHub repo: [mentors-api](https://github.com/alopez96/mentors-api).
 
 
-The frontend of this project was created with [Create React App](https://github.com/facebook/create-react-app) and [Redux](https://redux.js.org/).
+The frontend of this project was created with [React Native App](https://facebook.github.io/react-native) and [Redux](https://redux.js.org/).
 
 ## Installation
 
