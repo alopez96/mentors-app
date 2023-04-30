@@ -9,7 +9,7 @@
   "dependencies": {
     "base64-arraybuffer": "^0.1.5",
     "expo": "^32.0.0",
-    "native-base": "^2.8.2",
+    "native-base": "^2.15.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "react-native-aws3": "0.0.8",
